@@ -1,0 +1,14 @@
+C:\Users\afols\OneDrive\Password Recovery\Desktop\EmailAddressGenerator\bin\Debug\net10.0\EmailAddressGenerator.exe
+C:\Users\afols\OneDrive\Password Recovery\Desktop\EmailAddressGenerator\bin\Debug\net10.0\EmailAddressGenerator.deps.json
+C:\Users\afols\OneDrive\Password Recovery\Desktop\EmailAddressGenerator\bin\Debug\net10.0\EmailAddressGenerator.runtimeconfig.json
+C:\Users\afols\OneDrive\Password Recovery\Desktop\EmailAddressGenerator\bin\Debug\net10.0\EmailAddressGenerator.dll
+C:\Users\afols\OneDrive\Password Recovery\Desktop\EmailAddressGenerator\bin\Debug\net10.0\EmailAddressGenerator.pdb
+C:\Users\afols\OneDrive\Password Recovery\Desktop\EmailAddressGenerator\obj\Debug\net10.0\EmailAddressGenerator.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\afols\OneDrive\Password Recovery\Desktop\EmailAddressGenerator\obj\Debug\net10.0\EmailAddressGenerator.AssemblyInfoInputs.cache
+C:\Users\afols\OneDrive\Password Recovery\Desktop\EmailAddressGenerator\obj\Debug\net10.0\EmailAddressGenerator.AssemblyInfo.cs
+C:\Users\afols\OneDrive\Password Recovery\Desktop\EmailAddressGenerator\obj\Debug\net10.0\EmailAddressGenerator.csproj.CoreCompileInputs.cache
+C:\Users\afols\OneDrive\Password Recovery\Desktop\EmailAddressGenerator\obj\Debug\net10.0\EmailAddressGenerator.dll
+C:\Users\afols\OneDrive\Password Recovery\Desktop\EmailAddressGenerator\obj\Debug\net10.0\refint\EmailAddressGenerator.dll
+C:\Users\afols\OneDrive\Password Recovery\Desktop\EmailAddressGenerator\obj\Debug\net10.0\EmailAddressGenerator.pdb
+C:\Users\afols\OneDrive\Password Recovery\Desktop\EmailAddressGenerator\obj\Debug\net10.0\EmailAddressGenerator.genruntimeconfig.cache
+C:\Users\afols\OneDrive\Password Recovery\Desktop\EmailAddressGenerator\obj\Debug\net10.0\ref\EmailAddressGenerator.dll

@@ -1,0 +1,14 @@
+C:\Users\afols\OneDrive\Password Recovery\Desktop\BookLibraryApp\bin\Debug\net10.0\BookLibraryApp.exe
+C:\Users\afols\OneDrive\Password Recovery\Desktop\BookLibraryApp\bin\Debug\net10.0\BookLibraryApp.deps.json
+C:\Users\afols\OneDrive\Password Recovery\Desktop\BookLibraryApp\bin\Debug\net10.0\BookLibraryApp.runtimeconfig.json
+C:\Users\afols\OneDrive\Password Recovery\Desktop\BookLibraryApp\bin\Debug\net10.0\BookLibraryApp.dll
+C:\Users\afols\OneDrive\Password Recovery\Desktop\BookLibraryApp\bin\Debug\net10.0\BookLibraryApp.pdb
+C:\Users\afols\OneDrive\Password Recovery\Desktop\BookLibraryApp\obj\Debug\net10.0\BookLibraryApp.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\afols\OneDrive\Password Recovery\Desktop\BookLibraryApp\obj\Debug\net10.0\BookLibraryApp.AssemblyInfoInputs.cache
+C:\Users\afols\OneDrive\Password Recovery\Desktop\BookLibraryApp\obj\Debug\net10.0\BookLibraryApp.AssemblyInfo.cs
+C:\Users\afols\OneDrive\Password Recovery\Desktop\BookLibraryApp\obj\Debug\net10.0\BookLibraryApp.csproj.CoreCompileInputs.cache
+C:\Users\afols\OneDrive\Password Recovery\Desktop\BookLibraryApp\obj\Debug\net10.0\BookLibraryApp.dll
+C:\Users\afols\OneDrive\Password Recovery\Desktop\BookLibraryApp\obj\Debug\net10.0\refint\BookLibraryApp.dll
+C:\Users\afols\OneDrive\Password Recovery\Desktop\BookLibraryApp\obj\Debug\net10.0\BookLibraryApp.pdb
+C:\Users\afols\OneDrive\Password Recovery\Desktop\BookLibraryApp\obj\Debug\net10.0\BookLibraryApp.genruntimeconfig.cache
+C:\Users\afols\OneDrive\Password Recovery\Desktop\BookLibraryApp\obj\Debug\net10.0\ref\BookLibraryApp.dll

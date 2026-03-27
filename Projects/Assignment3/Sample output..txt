@@ -1,0 +1,83 @@
+[Running] cd "c:\Users\afols\OneDrive\Password Recovery\Desktop\WEB-DEV-PROJECTS\Assignment3\" && javac ProductManager.java && java ProductManager
+=== PART 1: Product Information and Weekly Sales ===
+
+Product 1:
+Product Name: Laptop
+Product ID: 1001
+Prices: [899.99, 949.99, 999.99, 899.99, 949.99, 999.99, 849.99, 899.99, 949.99, 999.99]
+
+Product 2:
+Product Name: Smartphone
+Product ID: 1002
+Prices: [599.99, 649.99, 699.99, 749.99, 699.99, 749.99, 799.99, 849.99, 799.99, 849.99]
+
+Product 3:
+Product Name: Tablet
+Product ID: 1003
+Prices: [299.99, 349.99, 399.99, 449.99, 399.99, 449.99, 499.99, 549.99, 499.99, 549.99]
+
+Product 4:
+Product Name: Headphones
+Product ID: 1004
+Prices: [99.99, 129.99, 149.99, 179.99, 149.99, 179.99, 199.99, 229.99, 199.99, 229.99]
+
+Product 5:
+Product Name: Monitor
+Product ID: 1005
+Prices: [199.99, 249.99, 299.99, 349.99, 299.99, 349.99, 399.99, 449.99, 399.99, 449.99]
+
+Product 6:
+Product Name: Keyboard
+Product ID: 1006
+Prices: [49.99, 59.99, 69.99, 79.99, 69.99, 79.99, 89.99, 99.99, 89.99, 99.99]
+
+Product 7:
+Product Name: Mouse
+Product ID: 1007
+Prices: [19.99, 29.99, 39.99, 49.99, 39.99, 49.99, 59.99, 69.99, 59.99, 69.99]
+
+Product 8:
+Product Name: Speakers
+Product ID: 1008
+Prices: [79.99, 99.99, 119.99, 139.99, 119.99, 139.99, 159.99, 179.99, 159.99, 179.99]
+
+Product 9:
+Product Name: Camera
+Product ID: 1009
+Prices: [399.99, 449.99, 499.99, 549.99, 499.99, 549.99, 599.99, 649.99, 599.99, 649.99]
+
+Product 10:
+Product Name: Smartwatch
+Product ID: 1010
+Prices: [199.99, 249.99, 299.99, 349.99, 299.99, 349.99, 399.99, 449.99, 399.99, 449.99]
+
+Weekly Sales:
+[85, 122, 92, 79, 111, 177, 127, 151, 179, 168, 
+ 157, 134, 97, 72, 187, 97, 142, 52, 54, 128, 
+ 173, 131, 132, 150, 194, 198, 195, 75, 171, 138, 
+ 176, 100, 95, 125, 198, 123, 135, 120, 116, 85]
+
+=== PART 2: Monthly Sales ===
+
+Month 1: [85, 122, 92, 79]
+Month 2: [111, 177, 127, 151]
+Month 3: [179, 168, 157, 134]
+
+=== PART 3: Searching and Sorting ===
+
+Average Sales for Month 2: 141.5
+
+Sorted Prices for Laptop:
+[849.99, 899.99, 899.99, 899.99, 949.99, 949.99, 949.99, 999.99, 999.99, 999.99]
+
+=== PART 4: Two-Dimensional Array ===
+
+Two-Dimensional Array:
+9 4 3 7 2 
+2 9 3 2 1 
+9 8 4 7 2 
+7 8 7 9 2 
+5 6 4 9 1 
+
+[Done] exited with code=0 in 3.377 seconds
+

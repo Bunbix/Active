@@ -1,0 +1,6 @@
+[Running] cd "c:\Users\afols\OneDrive\Password Recovery\Desktop\WEB-DEV-PROJECTS\Bank Accounts - Assignment\" && javac BankAccountProgram.java && java BankAccountProgram
+Savings account balance = $1,050.00
+Checking account balance = $50.00
+Checking account balance = $49.00
+
+[Done] exited with code=0 in 2.433 seconds

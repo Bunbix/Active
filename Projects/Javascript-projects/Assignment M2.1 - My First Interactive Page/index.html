@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Squares - My First JavaScript Page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #f1f1f1;
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #4CAF50, #8BC34A);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: #a0a0c0;
+            margin-bottom: 20px;
+        }
+        
+        .instructions {
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-left: 4px solid #4CAF50;
+        }
+        
+        .instructions h2 {
+            color: #4CAF50;
+            margin-bottom: 10px;
+            font-size: 1.5rem;
+        }
+        
+        .instructions ul {
+            padding-left: 20px;
+        }
+        
+        .instructions li {
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+        
+        .highlight {
+            color: #8BC34A;
+            font-weight: bold;
+        }
+        
+        .interactive-area {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        .square-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 300px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+        
+        .square-container:hover {
+            transform: translateY(-5px);
+        }
+        
+        .square {
+            width: 200px;
+            height: 200px;
+            margin-bottom: 25px;
+            border-radius: 10px;
+            transition: all 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Square colors */
+        #square1 {
+            background-color: #4CAF50; /* Green */
+        }
+        
+        #square2 {
+            background-color: #FFC107; /* Yellow */
+        }
+        
+        #square3 {
+            background-color: #F44336; /* Red */
+        }
+        
+        .button {
+            padding: 14px 28px;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Button colors to match squares */
+        #button1 {
+            background: linear-gradient(90deg, #4CAF50, #388E3C);
+        }
+        
+        #button1:hover {
+            box-shadow: 0 6px 15px rgba(76, 175, 80, 0.4);
+        }
+        
+        #button2 {
+            background: linear-gradient(90deg, #FFC107, #FFA000);
+        }
+        
+        #button2:hover {
+            box-shadow: 0 6px 15px rgba(255, 193, 7, 0.4);
+        }
+        
+        #button3 {
+            background: linear-gradient(90deg, #F44336, #D32F2F);
+        }
+        
+        #button3:hover {
+            box-shadow: 0 6px 15px rgba(244, 67, 54, 0.4);
+        }
+        
+        .button:hover {
+            transform: translateY(-3px);
+        }
+        
+        .button:active {
+            transform: translateY(1px);
+        }
+        
+        .button i {
+            margin-right: 8px;
+        }
+        
+        .effect-description {
+            margin-top: 15px;
+            font-style: italic;
+            color: #b8b8d1;
+            text-align: center;
+            min-height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* CSS classes to be applied by JavaScript */
+        .color-change {
+            background-color: #9C27B0 !important; /* Purple effect for green square */
+            box-shadow: 0 5px 20px rgba(156, 39, 176, 0.4) !important;
+        }
+        
+        .circle {
+            border-radius: 50% !important;
+            background-color: #FF9800 !important; /* Darker yellow for circle */
+            box-shadow: 0 5px 20px rgba(255, 152, 0, 0.4) !important;
+        }
+        
+        .disappear {
+            opacity: 0.1 !important;
+            background-color: #E91E63 !important; /* Pink effect for red square */
+            box-shadow: 0 5px 20px rgba(233, 30, 99, 0.4) !important;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            margin-top: 40px;
+            margin-bottom: 30px;
+        }
+        
+        .reset-button {
+            padding: 15px 40px;
+            background: linear-gradient(90deg, #607D8B, #455A64);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(96, 125, 139, 0.3);
+        }
+        
+        .reset-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(96, 125, 139, 0.4);
+        }
+        
+        footer {
+            margin-top: 40px;
+            text-align: center;
+            color: #a0a0c0;
+            font-size: 0.9rem;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            width: 100%;
+        }
+        
+        .submission-info {
+            margin-top: 20px;
+            padding: 15px;
+            background: linear-gradient(90deg, rgba(76, 175, 80, 0.1), rgba(255, 193, 7, 0.1), rgba(244, 67, 54, 0.1));
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            text-align: center;
+            font-size: 1.1rem;
+        }
+        
+        .author-name {
+            color: #8BC34A;
+            font-weight: bold;
+            font-size: 1.2rem;
+            display: inline-block;
+            margin-left: 5px;
+        }
+        
+        @media (max-width: 992px) {
+            .interactive-area {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .square-container {
+                width: 100%;
+                max-width: 350px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-magic"></i> Interactive Squares</h1>
+            <p class="subtitle">My First JavaScript Interactive Page - Assignment M2.1</p>
+            <p class="subtitle" style="color: #8BC34A; font-weight: bold; margin-top: 10px;">
+                <i class="fas fa-palette"></i> Green | Yellow | Red Theme
+            </p>
+        </header>
+        
+        <div class="instructions">
+            <h2><i class="fas fa-info-circle"></i> How It Works</h2>
+            <p>This page demonstrates DOM manipulation with JavaScript. Click the buttons below to see different visual effects applied to the squares:</p>
+            <ul>
+                <li><span class="highlight" style="color: #4CAF50;">Button 1 (Green Square)</span> changes the color to purple</li>
+                <li><span class="highlight" style="color: #FFC107;">Button 2 (Yellow Square)</span> transforms the square into a circle</li>
+                <li><span class="highlight" style="color: #F44336;">Button 3 (Red Square)</span> makes the square almost disappear with a pink effect</li>
+            </ul>
+            <p>Click the "Reset All Squares" button to restore all squares to their original state.</p>
+        </div>
+        
+        <div class="interactive-area">
+            <!-- Square 1 - Green -->
+            <div class="square-container">
+                <div class="square" id="square1">
+                    <i class="fas fa-square"></i>
+                </div>
+                <button class="button" id="button1">
+                    <i class="fas fa-palette"></i> Change Color
+                </button>
+                <div class="effect-description" id="description1">
+                    Green Square: Click to change me to purple!
+                </div>
+            </div>
+            
+            <!-- Square 2 - Yellow -->
+            <div class="square-container">
+                <div class="square" id="square2">
+                    <i class="fas fa-square"></i>
+                </div>
+                <button class="button" id="button2">
+                    <i class="fas fa-circle"></i> Make Circle
+                </button>
+                <div class="effect-description" id="description2">
+                    Yellow Square: Click to transform me into a circle!
+                </div>
+            </div>
+            
+            <!-- Square 3 - Red -->
+            <div class="square-container">
+                <div class="square" id="square3">
+                    <i class="fas fa-square"></i>
+                </div>
+                <button class="button" id="button3">
+                    <i class="fas fa-ghost"></i> Disappear
+                </button>
+                <div class="effect-description" id="description3">
+                    Red Square: Click to make me almost invisible with pink effect!
+                </div>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <button class="reset-button" id="resetButton">
+                <i class="fas fa-redo-alt"></i> Reset All Squares
+            </button>
+        </div>
+        
+        <!-- Submission Information -->
+        <div class="submission-info">
+            <p><i class="fas fa-user-graduate"></i> Submitted by: <span class="author-name">Olabisi Afolabi</span></p>
+            <p style="font-size: 0.9rem; margin-top: 5px; color: #a0a0c0;">
+                Assignment M2.1 - My First Interactive Page | JavaScript DOM Manipulation
+            </p>
+        </div>
+        
+        <footer>
+            <p>This interactive page demonstrates JavaScript functions, event listeners, and DOM manipulation.</p>
+            <p>Green | Yellow | Red Theme | Click buttons to apply CSS classes via JavaScript</p>
+        </footer>
+    </div>
+
+    <!-- JavaScript file linked with defer attribute -->
+    <script src="app.js" defer></script>
+</body>
+</html>

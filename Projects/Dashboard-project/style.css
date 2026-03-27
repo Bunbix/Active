@@ -1,0 +1,59 @@
+body {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    background-color: blueviolet; 
+    margin: 0;
+    padding: 40px 0; 
+}
+
+.container {
+    max-width: 1200px; 
+    margin: 0 auto; 
+    padding: 20px;
+}
+
+.row {
+    display: flex; 
+    justify-content: space-between; 
+    gap: 30px; 
+    margin-bottom: 30px; 
+}
+
+.card {
+    background-color: white; 
+    border-radius: 10px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    padding: 25px; 
+    flex: 1; 
+    min-width: 0; 
+    display: flex;  
+
+}
+
+.icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+}
+
+.content h3 {
+    margin: 0 0 8px 0; 
+    color: black; 
+    font-size: 1.1em;
+}
+
+.content p {
+    margin: 0; 
+    color: black; 
+    font-size: 1.8em; 
+    font-weight: bold;
+}
+
+.row .card:nth-child(1) .icon { background-color: blue; } 
+.row .card:nth-child(2) .icon { background-color: Green; } 
+.row .card:nth-child(3) .icon { background-color: Red; } 
+
+.row:nth-of-type(2) .card:nth-child(1) .icon { background-color: Yellow; } 
+.row:nth-of-type(2) .card:nth-child(2) .icon { background-color: Purple; } 
+.row:nth-of-type(2) .card:nth-child(3) .icon { background-color: orange; } 

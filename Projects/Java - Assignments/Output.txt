@@ -1,0 +1,22 @@
+[Running] cd "c:\Users\afols\OneDrive\Password Recovery\Desktop\WEB-DEV-PROJECTS\Java - Assignments\" && javac SavingsAccountDriver.java && java SavingsAccountDriver
+Monthly balances for one year with 0.05 annual interest:
+Month	Account #	Balance		Account #	Balance
+----	--------	-------		--------	-------
+0	10002		2000.00		10003		3000.00
+1	10002		2008.33		10003		3012.50
+2	10002		2016.70		10003		3025.05
+3	10002		2025.10		10003		3037.66
+4	10002		2033.54		10003		3050.31
+5	10002		2042.02		10003		3063.02
+6	10002		2050.52		10003		3075.79
+7	10002		2059.07		10003		3088.60
+8	10002		2067.65		10003		3101.47
+9	10002		2076.26		10003		3114.39
+10	10002		2084.91		10003		3127.37
+11	10002		2093.60		10003		3140.40
+12	10002		2102.32		10003		3153.49
+
+Final balance of both accounts combined: 5255.81
+
+[Done] exited with code=0 in 1.697 seconds
+

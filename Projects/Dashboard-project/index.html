@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="author" content="Olabisi Afolabi">
+    <title>My Dashboard</title>
+    <script src="https://kit.fontawesome.com/5d8b34e595.js" crossorigin="anonymous"></script>
+   <style>
+    body {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    background-color: blueviolet; 
+    margin: 0;
+    padding: 40px 0; 
+}
+
+.container {
+    max-width: 1200px; 
+    margin: 0 auto; 
+    padding: 20px;
+}
+
+.row {
+    display: flex; 
+    justify-content: space-between; 
+    gap: 30px; 
+    margin-bottom: 30px; 
+}
+
+.card {
+    background-color: white; 
+    border-radius: 10px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    padding: 25px; 
+    flex: 1; 
+    min-width: 0; 
+    display: flex;    
+
+  }
+
+.icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+}
+
+.content h3 {
+    margin: 0 0 8px 0; 
+    color: black; 
+    font-size: 1.1em;
+}
+
+.content p {
+    margin: 0; 
+    color: black; 
+    font-size: 1.8em; 
+    font-weight: bold;
+}
+
+.row .card:nth-child(1) .icon { background-color: blue; } 
+.row .card:nth-child(2) .icon { background-color: Green; } 
+.row .card:nth-child(3) .icon { background-color: Red; } 
+
+.row:nth-of-type(2) .card:nth-child(1) .icon { background-color: Yellow; } 
+.row:nth-of-type(2) .card:nth-child(2) .icon { background-color: Purple; } 
+.row:nth-of-type(2) .card:nth-child(3) .icon { background-color: orange; } 
+</style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="card">
+                <div class="icon"></div>
+                <div class="content">
+                    <h3>Revenue</h3>
+                    <p>$12,450</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="icon"></div>
+                <div class="content">
+                    <h3>Users</h3>
+                    <p>1,245</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="icon"></div>
+                <div class="content">
+                    <h3>Messages</h3>
+                    <p>600</p>
+                </div>
+            </div>
+          </div> 
+                <div class="row">
+                  <div class="card">
+                <div class="icon"></div>
+                <div class="content">
+                    <h3>Tasks</h3>
+                    <p>40/40 Complete</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="icon"></div>
+                <div class="content">
+                    <h3>Server Load</h3>
+                    <p>90%</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="icon"> </div>
+                <div class="content">
+                    <h3>Notifications</h3>
+                    <p>15 Unreads</p>
+                </div>
+            </div>
+        </div> 
+    </div> 
+</body>

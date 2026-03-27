@@ -1,0 +1,3429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canada/US Loan Amortization Calculator</title>
+    <style>
+        /* Reset and Base Styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .calculator-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            width: 100%;
+            max-width: 1400px;
+            overflow: hidden;
+        }
+
+        /* Header Styles */
+        .header {
+            background: linear-gradient(to right, #2c3e50, #4a6491);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Main Layout */
+        .main-content {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .input-section {
+            flex: 1;
+            min-width: 350px;
+            padding: 40px;
+            background: #f8f9fa;
+            border-right: 2px solid #e9ecef;
+        }
+
+        .results-section {
+            flex: 2;
+            min-width: 500px;
+            padding: 40px;
+            background: white;
+        }
+
+        /* Form Elements */
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 1rem;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s;
+            background: white;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        /* Input with Suffix */
+        .input-with-suffix {
+            position: relative;
+        }
+
+        .input-suffix {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
+            font-weight: 500;
+            pointer-events: none;
+        }
+
+        /* Selector Components */
+        .selector-group {
+            display: flex;
+            gap: 10px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+
+        .selector-option {
+            flex: 1;
+            padding: 15px;
+            text-align: center;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            border: none;
+            font-size: 0.95rem;
+        }
+
+        .selector-option:hover {
+            background: #f8f9fa;
+        }
+
+        .selector-option.active {
+            background: #667eea;
+            color: white;
+        }
+
+        /* Rate Details Panel */
+        .rate-details {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .rate-details.hidden {
+            display: none;
+        }
+
+        .rate-details h4 {
+            margin-bottom: 15px;
+            color: #2c3e50;
+            font-size: 1.1rem;
+        }
+
+        /* Slider Components */
+        .slider-container {
+            margin-top: 10px;
+        }
+
+        .slider-value {
+            text-align: center;
+            font-weight: 600;
+            color: #667eea;
+            margin-top: 5px;
+            font-size: 1.1rem;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            height: 6px;
+            border-radius: 5px;
+            background: #ddd;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #667eea;
+            cursor: pointer;
+            border: 3px solid white;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        }
+
+        /* Form Layout */
+        .form-row {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+            margin-bottom: 0;
+        }
+
+        /* Button Styles */
+        .calculate-btn {
+            background: linear-gradient(to right, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 18px;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s;
+            margin-top: 20px;
+        }
+
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .calculate-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Summary Cards */
+        .summary-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .summary-card {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            border: 2px solid #e9ecef;
+            transition: transform 0.3s;
+        }
+
+        .summary-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .summary-card h3 {
+            color: #2c3e50;
+            font-size: 1rem;
+            margin-bottom: 10px;
+            opacity: 0.8;
+        }
+
+        .summary-card .value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin: 10px 0;
+        }
+
+        .summary-card .subtext {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        /* Amortization Table */
+        .amortization-table-container {
+            max-height: 400px;
+            overflow-y: auto;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            margin-top: 20px;
+            position: relative;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+
+        thead {
+            position: sticky;
+            top: 0;
+            background: #2c3e50;
+            color: white;
+            z-index: 10;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: right;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        th {
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+
+        th:first-child, td:first-child {
+            text-align: left;
+            padding-left: 20px;
+        }
+
+        td {
+            color: #2c3e50;
+        }
+
+        tbody tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        /* Chart Container */
+        .payment-breakdown {
+            display: flex;
+            height: 300px;
+            margin-top: 30px;
+            gap: 20px;
+        }
+
+        .chart-container {
+            flex: 1;
+            min-height: 250px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 20px;
+            background: white;
+        }
+
+        /* Export Buttons */
+        .export-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .export-btn {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #667eea;
+            background: white;
+            color: #667eea;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .export-btn:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        /* Comparison Section */
+        .comparison-section {
+            margin-top: 40px;
+            padding: 25px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            border: 2px solid #e9ecef;
+        }
+
+        .comparison-section h3 {
+            margin-bottom: 20px;
+            color: #2c3e50;
+            text-align: center;
+            font-size: 1.3rem;
+        }
+
+        .comparison-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .comparison-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #e9ecef;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .comparison-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .comparison-card h4 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .comparison-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #667eea;
+            margin: 10px 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1100px) {
+            .main-content {
+                flex-direction: column;
+            }
+            
+            .input-section {
+                border-right: none;
+                border-bottom: 2px solid #e9ecef;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .header p {
+                font-size: 1rem;
+            }
+            
+            .input-section, .results-section {
+                padding: 20px;
+            }
+            
+            .payment-breakdown {
+                flex-direction: column;
+                height: auto;
+            }
+            
+            .chart-container {
+                min-height: 250px;
+            }
+            
+            .form-row {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .summary-cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .comparison-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .summary-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .summary-card .value {
+                font-size: 1.5rem;
+            }
+            
+            th, td {
+                padding: 10px;
+                font-size: 0.8rem;
+            }
+        }
+
+        /* Utility Classes */
+        .hidden {
+            display: none !important;
+        }
+
+        .highlight {
+            border-color: #667eea !important;
+            background: #f0f3ff !important;
+        }
+
+        .loading {
+            opacity: 0.7;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator-container">
+        <div class="header">
+            <h1>Canada/US Loan Amortization Calculator</h1>
+            <p>Professional mortgage calculator with detailed amortization schedules, support for fixed/variable rates, and multiple payment frequencies</p>
+        </div>
+        
+        <div class="main-content">
+            <!-- Input Section (Controller/View) -->
+            <div class="input-section">
+                <div class="form-group">
+                    <label>Country Selection</label>
+                    <div class="selector-group">
+                        <button class="selector-option active" data-country="CA">Canada (CAD)</button>
+                        <button class="selector-option" data-country="US">United States (USD)</button>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="loanAmount">Loan Amount</label>
+                    <div class="input-with-suffix">
+                        <input type="number" id="loanAmount" min="1000" max="10000000" step="1000" value="300000">
+                        <span class="input-suffix" id="currencySymbol">$</span>
+                    </div>
+                    <div class="slider-container">
+                        <input type="range" id="loanAmountSlider" min="1000" max="1000000" step="1000" value="300000">
+                    </div>
+                    <div class="slider-value" id="loanAmountValue">$300,000</div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Interest Rate Type</label>
+                    <div class="selector-group">
+                        <button class="selector-option active" data-rate-type="fixed">Fixed Rate</button>
+                        <button class="selector-option" data-rate-type="variable">Variable Rate</button>
+                    </div>
+                    
+                    <div class="rate-details" id="fixedRateDetails">
+                        <h4>Fixed Rate Details</h4>
+                        <label for="fixedRate">Annual Interest Rate (%)</label>
+                        <div class="input-with-suffix">
+                            <input type="number" id="fixedRate" min="0.1" max="20" step="0.01" value="4.5">
+                            <span class="input-suffix">%</span>
+                        </div>
+                        <div class="slider-container">
+                            <input type="range" id="fixedRateSlider" min="0.1" max="20" step="0.1" value="4.5">
+                        </div>
+                        <div class="slider-value" id="fixedRateValue">4.5%</div>
+                    </div>
+                    
+                    <div class="rate-details hidden" id="variableRateDetails">
+                        <h4>Variable Rate Details</h4>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="initialRate">Initial Rate (%)</label>
+                                <div class="input-with-suffix">
+                                    <input type="number" id="initialRate" min="0.1" max="20" step="0.01" value="3.5">
+                                    <span class="input-suffix">%</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="rateChange">Rate Change After (Years)</label>
+                                <input type="number" id="rateChange" min="1" max="30" step="1" value="5">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="newRate">New Rate After Change (%)</label>
+                                <div class="input-with-suffix">
+                                    <input type="number" id="newRate" min="0.1" max="20" step="0.01" value="4.5">
+                                    <span class="input-suffix">%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="loanTerm">Loan Term (Years)</label>
+                        <div class="input-with-suffix">
+                            <input type="number" id="loanTerm" min="1" max="30" step="1" value="25">
+                            <span class="input-suffix">years</span>
+                        </div>
+                        <div class="slider-container">
+                            <input type="range" id="loanTermSlider" min="1" max="30" step="1" value="25">
+                        </div>
+                        <div class="slider-value" id="loanTermValue">25 years</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="amortizationPeriod">Amortization Period (Years)</label>
+                        <div class="input-with-suffix">
+                            <input type="number" id="amortizationPeriod" min="1" max="30" step="1" value="25">
+                            <span class="input-suffix">years</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="paymentFrequency">Payment Frequency</label>
+                    <select id="paymentFrequency">
+                        <option value="1">Annual</option>
+                        <option value="2">Semi-Annual</option>
+                        <option value="4">Quarterly</option>
+                        <option value="12" selected>Monthly</option>
+                        <option value="24">Semi-Monthly</option>
+                        <option value="26">Bi-Weekly</option>
+                        <option value="52">Weekly</option>
+                    </select>
+                </div>
+                
+                <button class="calculate-btn" id="calculateBtn">
+                    <span class="btn-text">Calculate Amortization</span>
+                    <span class="btn-loading hidden">Calculating...</span>
+                </button>
+                
+                <div class="export-buttons">
+                    <button class="export-btn" id="exportCSV">Export to CSV</button>
+                    <button class="export-btn" id="exportPDF">Export to PDF</button>
+                </div>
+            </div>
+            
+            <!-- Results Section (View) -->
+            <div class="results-section">
+                <div class="summary-cards">
+                    <div class="summary-card">
+                        <h3 id="paymentFrequencyLabel">Monthly Payment</h3>
+                        <div class="value" id="periodicPayment">$1,667.63</div>
+                        <div class="subtext">Principal + Interest</div>
+                    </div>
+                    <div class="summary-card">
+                        <h3>Total Interest</h3>
+                        <div class="value" id="totalInterest">$200,289.60</div>
+                        <div class="subtext">Over loan term</div>
+                    </div>
+                    <div class="summary-card">
+                        <h3>Total Payment</h3>
+                        <div class="value" id="totalPayment">$500,289.60</div>
+                        <div class="subtext">Principal + Interest</div>
+                    </div>
+                    <div class="summary-card">
+                        <h3>Pay-off Date</h3>
+                        <div class="value" id="payoffDate">Apr 2049</div>
+                        <div class="subtext">Final payment date</div>
+                    </div>
+                </div>
+                
+                <h3 style="margin: 30px 0 15px 0; color: #2c3e50;">Amortization Schedule</h3>
+                <div class="amortization-table-container">
+                    <table id="amortizationTable">
+                        <thead>
+                            <tr>
+                                <th>Payment #</th>
+                                <th id="paymentHeader">Payment</th>
+                                <th>Principal</th>
+                                <th>Interest</th>
+                                <th>Balance</th>
+                                <th>Rate</th>
+                            </tr>
+                        </thead>
+                        <tbody id="amortizationTableBody">
+                            <!-- Table will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="payment-breakdown">
+                    <div class="chart-container">
+                        <canvas id="paymentChart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="comparison-section">
+                    <h3>Payment Frequency Comparison</h3>
+                    <div class="comparison-cards" id="frequencyComparison">
+                        <!-- Comparison cards will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // ============================================
+        // ARCHITECTURE OVERVIEW
+        // ============================================
+        // This calculator follows MVC-like pattern:
+        // - Model: LoanCalculator class (business logic)
+        // - View: DOM elements and event handlers
+        // - Controller: Main module coordinating between Model and View
+        //
+        // Key Patterns:
+        // 1. Module-level element caching for performance
+        // 2. Data attributes for state management
+        // 3. Input synchronization pattern (text + sliders)
+        // 4. Precision handling for financial calculations
+        // ============================================
+
+        // ============================================
+        // MODEL: LoanCalculator Class (Business Logic)
+        // ============================================
+        class LoanCalculator {
+            constructor() {
+                this.PRECISION = 2; // Decimal precision for currency
+                this.MIN_BALANCE = 0.01; // Minimum balance threshold
+            }
+
+            /**
+             * Calculate periodic payment using standard amortization formula
+             * P = (r * PV) / (1 - (1 + r)^-n)
+             * 
+             * @param {number} principal - Loan amount
+             * @param {number} annualRate - Annual interest rate (decimal)
+             * @param {number} paymentFrequency - Payments per year
+             * @param {number} amortizationYears - Amortization period in years
+             * @returns {number} Periodic payment amount
+             */
+            calculatePeriodicPayment(principal, annualRate, paymentFrequency, amortizationYears) {
+                if (principal <= 0 || amortizationYears <= 0) return 0;
+                
+                const periodicRate = annualRate / paymentFrequency;
+                const totalPayments = amortizationYears * paymentFrequency;
+                
+                // Handle zero interest rate case
+                if (periodicRate === 0) {
+                    return this.roundCurrency(principal / totalPayments);
+                }
+                
+                // Standard amortization formula
+                const numerator = periodicRate * Math.pow(1 + periodicRate, totalPayments);
+                const denominator = Math.pow(1 + periodicRate, totalPayments) - 1;
+                const payment = principal * (numerator / denominator);
+                
+                return this.roundCurrency(payment);
+            }
+
+            /**
+             * Generate amortization schedule for fixed or variable rates
+             * 
+             * @param {Object} params - Calculation parameters
+             * @returns {Array} Amortization schedule array
+             */
+            generateAmortizationSchedule(params) {
+                const {
+                    principal,
+                    rates, // Array of {rate: decimal, periods: number}
+                    paymentFrequency,
+                    amortizationYears,
+                    periodicPayment
+                } = params;
+                
+                let balance = principal;
+                let schedule = [];
+                let period = 1;
+                let totalInterest = 0;
+
+                // Process each rate period
+                rates.forEach(rateBlock => {
+                    const periodicRate = rateBlock.rate / paymentFrequency;
+                    
+                    for (let i = 0; i < rateBlock.periods && balance > 0; i++, period++) {
+                        const interest = this.roundCurrency(balance * periodicRate);
+                        let principalPayment = this.roundCurrency(periodicPayment - interest);
+                        
+                        // Handle last payment adjustment
+                        if (principalPayment > balance) {
+                            principalPayment = balance;
+                            periodicPayment = this.roundCurrency(principalPayment + interest);
+                        }
+                        
+                        balance = this.roundCurrency(balance - principalPayment);
+                        
+                        // Clear negligible balance
+                        if (Math.abs(balance) < this.MIN_BALANCE) {
+                            balance = 0;
+                        }
+                        
+                        totalInterest += interest;
+                        
+                        schedule.push({
+                            period,
+                            payment: periodicPayment,
+                            principal: principalPayment,
+                            interest,
+                            balance,
+                            annualRate: rateBlock.rate * 100
+                        });
+                    }
+                });
+                
+                return {
+                    schedule,
+                    totalInterest: this.roundCurrency(totalInterest),
+                    totalPayment: this.roundCurrency(principal + totalInterest)
+                };
+            }
+
+            /**
+             * Calculate rates array for variable rate scenario
+             * 
+             * @param {Object} params - Variable rate parameters
+             * @returns {Array} Rates array for amortization
+             */
+            calculateVariableRates(params) {
+                const {
+                    initialRate,
+                    newRate,
+                    changeAfterYears,
+                    paymentFrequency,
+                    amortizationYears
+                } = params;
+                
+                const rates = [];
+                const totalPeriods = amortizationYears * paymentFrequency;
+                const periodsBeforeChange = changeAfterYears * paymentFrequency;
+                const periodsAfterChange = totalPeriods - periodsBeforeChange;
+                
+                if (periodsBeforeChange > 0) {
+                    rates.push({
+                        rate: initialRate,
+                        periods: periodsBeforeChange
+                    });
+                }
+                
+                if (periodsAfterChange > 0) {
+                    rates.push({
+                        rate: newRate,
+                        periods: periodsAfterChange
+                    });
+                }
+                
+                return rates;
+            }
+
+            /**
+             * Round currency values to specified precision
+             * 
+             * @param {number} value - Value to round
+             * @returns {number} Rounded value
+             */
+            roundCurrency(value) {
+                return Math.round(value * Math.pow(10, this.PRECISION)) / Math.pow(10, this.PRECISION);
+            }
+
+            /**
+             * Format period label based on frequency
+             * 
+             * @param {number} period - Period number
+             * @param {number} frequency - Payment frequency
+             * @returns {string} Formatted period label
+             */
+            formatPeriodLabel(period, frequency) {
+                const year = Math.ceil(period / frequency);
+                const paymentInYear = ((period - 1) % frequency) + 1;
+                
+                if (frequency === 1) {
+                    return `Year ${year}`;
+                } else {
+                    return `Year ${year}, Payment ${paymentInYear}`;
+                }
+            }
+        }
+
+        // ============================================
+        // VIEW/CONTROLLER: Main Application Module
+        // ============================================
+        const LoanApp = (function() {
+            // Module-level element cache (Pattern: Element Caching)
+            const elements = {
+                // Input elements
+                countryOptions: document.querySelectorAll('[data-country]'),
+                rateTypeOptions: document.querySelectorAll('[data-rate-type]'),
+                loanAmount: document.getElementById('loanAmount'),
+                loanAmountSlider: document.getElementById('loanAmountSlider'),
+                loanAmountValue: document.getElementById('loanAmountValue'),
+                fixedRate: document.getElementById('fixedRate'),
+                fixedRateSlider: document.getElementById('fixedRateSlider'),
+                fixedRateValue: document.getElementById('fixedRateValue'),
+                initialRate: document.getElementById('initialRate'),
+                rateChange: document.getElementById('rateChange'),
+                newRate: document.getElementById('newRate'),
+                loanTerm: document.getElementById('loanTerm'),
+                loanTermSlider: document.getElementById('loanTermSlider'),
+                loanTermValue: document.getElementById('loanTermValue'),
+                paymentFrequency: document.getElementById('paymentFrequency'),
+                amortizationPeriod: document.getElementById('amortizationPeriod'),
+                calculateBtn: document.getElementById('calculateBtn'),
+                
+                // Output elements
+                periodicPayment: document.getElementById('periodicPayment'),
+                paymentFrequencyLabel: document.getElementById('paymentFrequencyLabel'),
+                paymentHeader: document.getElementById('paymentHeader'),
+                totalInterest: document.getElementById('totalInterest'),
+                totalPayment: document.getElementById('totalPayment'),
+                payoffDate: document.getElementById('payoffDate'),
+                amortizationTableBody: document.getElementById('amortizationTableBody'),
+                currencySymbol: document.getElementById('currencySymbol'),
+                frequencyComparison: document.getElementById('frequencyComparison'),
+                
+                // Export elements
+                exportCSV: document.getElementById('exportCSV'),
+                exportPDF: document.getElementById('exportPDF'),
+                
+                // Section elements
+                fixedRateDetails: document.getElementById('fixedRateDetails'),
+                variableRateDetails: document.getElementById('variableRateDetails'),
+                
+                // Button elements
+                btnText: document.querySelector('.btn-text'),
+                btnLoading: document.querySelector('.btn-loading')
+            };
+
+            // Application state (Pattern: State Management)
+            const state = {
+                currentCountry: 'CA',
+                currentRateType: 'fixed',
+                amortizationData: [],
+                paymentChart: null,
+                calculator: new LoanCalculator()
+            };
+
+            // Country settings configuration
+            const countrySettings = {
+                CA: { currency: 'CAD', symbol: '$', defaultRate: 4.5, maxAmortization: 30 },
+                US: { currency: 'USD', symbol: '$', defaultRate: 4.0, maxAmortization: 30 }
+            };
+
+            // Payment frequency labels
+            const frequencyLabels = {
+                1: { singular: 'Annual', plural: 'Annually' },
+                2: { singular: 'Semi-Annual', plural: 'Semi-Annually' },
+                4: { singular: 'Quarterly', plural: 'Quarterly' },
+                12: { singular: 'Monthly', plural: 'Monthly' },
+                24: { singular: 'Semi-Monthly', plural: 'Semi-Monthly' },
+                26: { singular: 'Bi-Weekly', plural: 'Bi-Weekly' },
+                52: { singular: 'Weekly', plural: 'Weekly' }
+            };
+
+            // ============================================
+            // PUBLIC METHODS
+            // ============================================
+
+            function init() {
+                setupEventListeners();
+                updateCountrySettings();
+                updateFrequencyLabels();
+                calculateAmortization();
+            }
+
+            // ============================================
+            // PRIVATE METHODS: Event Handling
+            // ============================================
+
+            function setupEventListeners() {
+                // Country selection (Pattern: Event Delegation)
+                elements.countryOptions.forEach(option => {
+                    option.addEventListener('click', handleCountryChange);
+                });
+
+                // Rate type selection
+                elements.rateTypeOptions.forEach(option => {
+                    option.addEventListener('click', handleRateTypeChange);
+                });
+
+                // Input synchronization pattern (Pattern: Input Synchronization)
+                setupInputSynchronization('loanAmount', 'loanAmountSlider', 'loanAmountValue', formatCurrency);
+                setupInputSynchronization('fixedRate', 'fixedRateSlider', 'fixedRateValue', value => `${value}%`);
+                setupInputSynchronization('loanTerm', 'loanTermSlider', 'loanTermValue', value => `${value} years`);
+
+                // Other input events
+                elements.initialRate.addEventListener('input', calculateAmortization);
+                elements.rateChange.addEventListener('input', calculateAmortization);
+                elements.newRate.addEventListener('input', calculateAmortization);
+                elements.paymentFrequency.addEventListener('change', handleFrequencyChange);
+                elements.amortizationPeriod.addEventListener('input', calculateAmortization);
+                elements.calculateBtn.addEventListener('click', calculateAmortization);
+                elements.exportCSV.addEventListener('click', exportToCSV);
+                elements.exportPDF.addEventListener('click', exportToPDF);
+            }
+
+            function handleCountryChange(event) {
+                const country = event.target.dataset.country;
+                
+                // Update UI state
+                elements.countryOptions.forEach(opt => opt.classList.remove('active'));
+                event.target.classList.add('active');
+                
+                // Update application state
+                state.currentCountry = country;
+                
+                // Update settings
+                updateCountrySettings();
+                
+                // Recalculate
+                calculateAmortization();
+            }
+
+            function handleRateTypeChange(event) {
+                const rateType = event.target.dataset.rateType;
+                
+                // Update UI state
+                elements.rateTypeOptions.forEach(opt => opt.classList.remove('active'));
+                event.target.classList.add('active');
+                
+                // Update application state
+                state.currentRateType = rateType;
+                
+                // Show/hide rate details
+                elements.fixedRateDetails.classList.toggle('hidden', rateType !== 'fixed');
+                elements.variableRateDetails.classList.toggle('hidden', rateType !== 'variable');
+                
+                // Recalculate
+                calculateAmortization();
+            }
+
+            function handleFrequencyChange() {
+                updateFrequencyLabels();
+                calculateAmortization();
+            }
+
+            // ============================================
+            // PRIVATE METHODS: Input Synchronization Pattern
+            // ============================================
+
+            function setupInputSynchronization(inputId, sliderId, displayId, formatter) {
+                const input = document.getElementById(inputId);
+                const slider = document.getElementById(sliderId);
+                const display = document.getElementById(displayId);
+                
+                if (!input || !slider || !display) return;
+                
+                // Sync input to slider
+                input.addEventListener('input', () => {
+                    slider.value = input.value;
+                    display.textContent = formatter(input.value);
+                    calculateAmortization();
+                });
+                
+                // Sync slider to input
+                slider.addEventListener('input', () => {
+                    input.value = slider.value;
+                    display.textContent = formatter(slider.value);
+                    calculateAmortization();
+                });
+            }
+
+            // ============================================
+            // PRIVATE METHODS: UI Updates
+            // ============================================
+
+            function updateCountrySettings() {
+                const settings = countrySettings[state.currentCountry];
+                elements.currencySymbol.textContent = settings.symbol;
+                
+                // Update max amortization period
+                elements.amortizationPeriod.max = settings.maxAmortization;
+                
+                // Update default rate if needed
+                if (elements.fixedRate.value === '4.5' || elements.fixedRate.value === '4.0') {
+                    elements.fixedRate.value = settings.defaultRate;
+                    elements.fixedRateSlider.value = settings.defaultRate;
+                    elements.fixedRateValue.textContent = `${settings.defaultRate}%`;
+                }
+            }
+
+            function updateFrequencyLabels() {
+                const frequency = parseInt(elements.paymentFrequency.value);
+                const labels = frequencyLabels[frequency];
+                
+                elements.paymentFrequencyLabel.textContent = `${labels.singular} Payment`;
+                elements.paymentHeader.textContent = `${labels.singular} Payment`;
+            }
+
+            // ============================================
+            // PRIVATE METHODS: Core Calculations
+            // ============================================
+
+            function calculateAmortization() {
+                // Show loading state
+                setLoadingState(true);
+                
+                // Get input values
+                const principal = parseFloat(elements.loanAmount.value);
+                const paymentFrequency = parseInt(elements.paymentFrequency.value);
+                const amortizationYears = parseInt(elements.amortizationPeriod.value);
+                
+                // Prepare rate parameters based on rate type
+                let rates;
+                if (state.currentRateType === 'fixed') {
+                    const annualRate = parseFloat(elements.fixedRate.value) / 100;
+                    rates = [{ rate: annualRate, periods: amortizationYears * paymentFrequency }];
+                } else {
+                    const initialRate = parseFloat(elements.initialRate.value) / 100;
+                    const newRate = parseFloat(elements.newRate.value) / 100;
+                    const changeAfterYears = parseInt(elements.rateChange.value);
+                    
+                    rates = state.calculator.calculateVariableRates({
+                        initialRate,
+                        newRate,
+                        changeAfterYears,
+                        paymentFrequency,
+                        amortizationYears
+                    });
+                }
+                
+                // Calculate periodic payment
+                const periodicPayment = state.calculator.calculatePeriodicPayment(
+                    principal,
+                    rates[0].rate,
+                    paymentFrequency,
+                    amortizationYears
+                );
+                
+                // Generate amortization schedule
+                const result = state.calculator.generateAmortizationSchedule({
+                    principal,
+                    rates,
+                    paymentFrequency,
+                    amortizationYears,
+                    periodicPayment
+                });
+                
+                // Update application state
+                state.amortizationData = result.schedule;
+                
+                // Update UI
+                updateSummary(principal, periodicPayment, result.totalInterest, amortizationYears);
+                updateAmortizationTable();
+                updatePaymentChart();
+                updateFrequencyComparison(principal, rates[0].rate, amortizationYears);
+                
+                // Hide loading state
+                setLoadingState(false);
+            }
+
+            // ============================================
+            // PRIVATE METHODS: UI Updates (Results)
+            // ============================================
+
+            function updateSummary(principal, periodicPayment, totalInterest, amortizationYears) {
+                const totalPayment = principal + totalInterest;
+                const frequency = parseInt(elements.paymentFrequency.value);
+                const labels = frequencyLabels[frequency];
+                
+                // Update summary cards
+                elements.periodicPayment.textContent = formatCurrency(periodicPayment);
+                elements.totalInterest.textContent = formatCurrency(totalInterest);
+                elements.totalPayment.textContent = formatCurrency(totalPayment);
+                
+                // Calculate payoff date
+                const payoffDate = new Date();
+                payoffDate.setFullYear(payoffDate.getFullYear() + amortizationYears);
+                elements.payoffDate.textContent = payoffDate.toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'short'
+                });
+            }
+
+            function updateAmortizationTable() {
+                const tbody = elements.amortizationTableBody;
+                const frequency = parseInt(elements.paymentFrequency.value);
+                
+                // Clear existing rows
+                tbody.innerHTML = '';
+                
+                // Performance optimization: Show sample of data
+                const displayData = getDisplayData(state.amortizationData, 24);
+                
+                // Generate table rows
+                displayData.forEach(item => {
+                    if (item === null) {
+                        // Separator row
+                        const separatorRow = document.createElement('tr');
+                        separatorRow.innerHTML = `
+                            <td colspan="6" style="text-align: center; color: #666; padding: 15px; font-style: italic;">
+                                ... ${state.amortizationData.length - 24} payments hidden ...
+                            </td>
+                        `;
+                        tbody.appendChild(separatorRow);
+                    } else {
+                        const row = document.createElement('tr');
+                        const periodLabel = state.calculator.formatPeriodLabel(item.period, frequency);
+                        
+                        row.innerHTML = `
+                            <td>${periodLabel}</td>
+                            <td>${formatCurrency(item.payment)}</td>
+                            <td>${formatCurrency(item.principal)}</td>
+                            <td>${formatCurrency(item.interest)}</td>
+                            <td>${formatCurrency(item.balance)}</td>
+                            <td>${item.annualRate.toFixed(2)}%</td>
+                        `;
+                        
+                        tbody.appendChild(row);
+                    }
+                });
+            }
+
+            function updatePaymentChart() {
+                const ctx = document.getElementById('paymentChart').getContext('2d');
+                const frequency = parseInt(elements.paymentFrequency.value);
+                
+                // Destroy previous chart
+                if (state.paymentChart) {
+                    state.paymentChart.destroy();
+                }
+                
+                // Prepare chart data (sample for performance)
+                const chartData = prepareChartData(state.amortizationData, frequency);
+                
+                // Create new chart
+                state.paymentChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: chartData.labels,
+                        datasets: [
+                            {
+                                label: 'Principal',
+                                data: chartData.principal,
+                                backgroundColor: '#667eea',
+                                borderColor: '#667eea',
+                                borderWidth: 1
+                            },
+                            {
+                                label: 'Interest',
+                                data: chartData.interest,
+                                backgroundColor: '#764ba2',
+                                borderColor: '#764ba2',
+                                borderWidth: 1
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'Payment Breakdown Over Time',
+                                font: { size: 16 }
+                            },
+                            legend: { position: 'top' },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        return `${context.dataset.label}: ${formatCurrency(context.raw)}`;
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: {
+                                    callback: function(value) {
+                                        return formatCurrency(value);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            function updateFrequencyComparison(principal, annualRate, amortizationYears) {
+                const currentFrequency = parseInt(elements.paymentFrequency.value);
+                const frequencies = [1, 2, 4, 12, 24, 26, 52];
+                
+                let comparisonHTML = '';
+                
+                frequencies.forEach(freq => {
+                    const periodicPayment = state.calculator.calculatePeriodicPayment(
+                        principal,
+                        annualRate,
+                        freq,
+                        amortizationYears
+                    );
+                    
+                    const annualPayment = periodicPayment * freq;
+                    const labels = frequencyLabels[freq];
+                    const isCurrent = freq === currentFrequency;
+                    
+                    comparisonHTML += `
+                        <div class="comparison-card ${isCurrent ? 'highlight' : ''}">
+                            <h4>${labels.plural}</h4>
+                            <div class="comparison-value">${formatCurrency(periodicPayment)}</div>
+                            <div style="color: #666; font-size: 0.9rem; margin-bottom: 8px;">
+                                per payment
+                            </div>
+                            <div style="color: #2c3e50; font-weight: 600;">
+                                ${formatCurrency(annualPayment)} annually
+                            </div>
+                            ${isCurrent ? 
+                                '<div style="margin-top: 10px; color: #667eea; font-weight: 600; font-size: 0.9rem;">✓ Current Selection</div>' : 
+                                ''
+                            }
+                        </div>
+                    `;
+                });
+                
+                elements.frequencyComparison.innerHTML = comparisonHTML;
+            }
+
+            // ============================================
+            // PRIVATE METHODS: Utility Functions
+            // ============================================
+
+            function formatCurrency(value) {
+                const settings = countrySettings[state.currentCountry];
+                return settings.symbol + 
+                       parseFloat(value).toLocaleString('en-US', {
+                           minimumFractionDigits: 2,
+                           maximumFractionDigits: 2
+                       });
+            }
+
+            function getDisplayData(data, maxItems) {
+                if (data.length <= maxItems) {
+                    return data;
+                }
+                
+                // Return first 12, separator, last 12
+                const firstHalf = data.slice(0, maxItems / 2);
+                const lastHalf = data.slice(-maxItems / 2);
+                
+                return [...firstHalf, null, ...lastHalf];
+            }
+
+            function prepareChartData(data, frequency) {
+                const labels = [];
+                const principal = [];
+                const interest = [];
+                
+                // Sample data for chart (every nth item)
+                const sampleRate = Math.max(1, Math.floor(data.length / 12));
+                
+                for (let i = 0; i < data.length; i += sampleRate) {
+                    const item = data[i];
+                    const year = Math.ceil((i + 1) / frequency);
+                    
+                    labels.push(`Year ${year}`);
+                    principal.push(item.principal);
+                    interest.push(item.interest);
+                }
+                
+                return { labels, principal, interest };
+            }
+
+            function setLoadingState(isLoading) {
+                if (isLoading) {
+                    elements.calculateBtn.classList.add('loading');
+                    elements.btnText.classList.add('hidden');
+                    elements.btnLoading.classList.remove('hidden');
+                } else {
+                    elements.calculateBtn.classList.remove('loading');
+                    elements.btnText.classList.remove('hidden');
+                    elements.btnLoading.classList.add('hidden');
+                }
+            }
+
+            // ============================================
+            // PRIVATE METHODS: Export Functions
+            // ============================================
+
+            function exportToCSV() {
+                if (state.amortizationData.length === 0) {
+                    alert('No data to export. Please calculate first.');
+                    return;
+                }
+                
+                let csvContent = "data:text/csv;charset=utf-8,";
+                csvContent += "Period,Payment,Principal,Interest,Balance,Interest Rate\n";
+                
+                state.amortizationData.forEach(item => {
+                    const frequency = parseInt(elements.paymentFrequency.value);
+                    const periodLabel = state.calculator.formatPeriodLabel(item.period, frequency);
+                    
+                    csvContent += `${periodLabel},${item.payment.toFixed(2)},${item.principal.toFixed(2)},${item.interest.toFixed(2)},${item.balance.toFixed(2)},${item.annualRate.toFixed(2)}%\n`;
+                });
+                
+                const encodedUri = encodeURI(csvContent);
+                const link = document.createElement("a");
+                link.setAttribute("href", encodedUri);
+                link.setAttribute("download", `amortization_schedule_${state.currentCountry}.csv`);
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+
+            function exportToPDF() {
+                alert('PDF export requires jsPDF library integration.\n\nFor production:\n1. Add jsPDF and jsPDF-autotable scripts\n2. Implement PDF generation with tables and charts\n\nCSV export is available for now.');
+            }
+
+            // ============================================
+            // PUBLIC API
+            // ============================================
+            return {
+                init: init,
+                calculateAmortization: calculateAmortization,
+                getState: () => ({ ...state }),
+                getElements: () => ({ ...elements })
+            };
+        })();
+
+        // ============================================
+        // APPLICATION INITIALIZATION
+        // ============================================
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize the application
+            LoanApp.init();
+            
+            // Expose for debugging (remove in production)
+            window.LoanApp = LoanApp;
+        });
+    </script>
+</body>
+</html>
+
+..................................................................................................................................
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Loan & TVM Calculator</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        .app-container {
+            max-width: 1800px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: linear-gradient(to right, #2c3e50, #4a6491);
+            color: white;
+            padding: 30px;
+            border-radius: 20px 20px 0 0;
+            text-align: center;
+            margin-bottom: 0;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 1.1rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            background: white;
+        }
+
+        /* Tab Navigation */
+        .tab-navigation {
+            grid-column: 1 / -1;
+            display: flex;
+            background: #f8f9fa;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .tab-button {
+            padding: 20px 30px;
+            background: none;
+            border: none;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+        }
+
+        .tab-button:hover {
+            color: #667eea;
+            background: #f0f3ff;
+        }
+
+        .tab-button.active {
+            color: #667eea;
+            border-bottom: 3px solid #667eea;
+            background: #f0f3ff;
+        }
+
+        /* Left Panel */
+        .input-section {
+            padding: 40px;
+            background: #f8f9fa;
+            border-right: 2px solid #e9ecef;
+            min-height: 800px;
+        }
+
+        /* Right Panel */
+        .results-section {
+            padding: 40px;
+            background: white;
+            min-height: 800px;
+        }
+
+        /* Form Elements */
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+            margin-bottom: 0;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 1rem;
+        }
+
+        input, select, button {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        /* Advanced Sections */
+        .advanced-section {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 25px;
+            margin-top: 30px;
+        }
+
+        .advanced-section h3 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .advanced-section h3 i {
+            color: #667eea;
+        }
+
+        /* Scenario Comparison */
+        .scenario-comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .scenario-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 25px;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s;
+        }
+
+        .scenario-card.active {
+            border-color: #667eea;
+            background: #f0f3ff;
+        }
+
+        /* Results Cards */
+        .summary-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .summary-card {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            border: 2px solid #e9ecef;
+            transition: transform 0.3s;
+        }
+
+        .summary-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .summary-card h3 {
+            color: #2c3e50;
+            font-size: 1rem;
+            margin-bottom: 10px;
+            opacity: 0.8;
+        }
+
+        .summary-card .value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin: 10px 0;
+        }
+
+        .summary-card .subtext {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        /* Table Styles */
+        .amortization-table-container {
+            max-height: 400px;
+            overflow-y: auto;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+
+        thead {
+            position: sticky;
+            top: 0;
+            background: #2c3e50;
+            color: white;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: right;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        th:first-child, td:first-child {
+            text-align: left;
+        }
+
+        /* Chart Container */
+        .chart-container {
+            height: 300px;
+            margin-top: 30px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 20px;
+            background: white;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .primary-btn {
+            background: linear-gradient(to right, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            flex: 1;
+        }
+
+        .primary-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .secondary-btn {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+            padding: 15px 25px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            flex: 1;
+        }
+
+        .secondary-btn:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        /* Irregular Payments Section */
+        .irregular-payments {
+            margin-top: 20px;
+        }
+
+        .payment-item {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .payment-item input, .payment-item select {
+            flex: 1;
+        }
+
+        .remove-payment {
+            background: #ff4757;
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        /* TVM Calculator */
+        .tvm-inputs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .tvm-result {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .tvm-result h2 {
+            font-size: 2.5rem;
+            margin: 10px 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .input-section {
+                border-right: none;
+                border-bottom: 2px solid #e9ecef;
+            }
+            
+            .scenario-comparison {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .tab-button {
+                padding: 15px 20px;
+                font-size: 1rem;
+            }
+            
+            .summary-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .tvm-inputs {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Utility Classes */
+        .hidden {
+            display: none !important;
+        }
+
+        .highlight {
+            background: #f0f3ff !important;
+            border-color: #667eea !important;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <div class="header">
+            <h1><i class="fas fa-calculator"></i> Advanced Loan & TVM Calculator</h1>
+            <p>Professional financial analysis with multiple compounding, irregular payments, balloon payments, and TVM calculations</p>
+        </div>
+        
+        <div class="main-content">
+            <!-- Tab Navigation -->
+            <div class="tab-navigation">
+                <button class="tab-button active" data-tab="loan-calc">
+                    <i class="fas fa-home-loan"></i> Loan Calculator
+                </button>
+                <button class="tab-button" data-tab="tvm-calc">
+                    <i class="fas fa-chart-line"></i> TVM Calculator
+                </button>
+                <button class="tab-button" data-tab="scenario-compare">
+                    <i class="fas fa-balance-scale"></i> Scenario Comparison
+                </button>
+                <button class="tab-button" data-tab="cash-flow">
+                    <i class="fas fa-money-bill-wave"></i> Cash Flow Analysis
+                </button>
+            </div>
+            
+            <!-- Loan Calculator Tab -->
+            <div class="tab-content active" id="loan-calc">
+                <div class="input-section">
+                    <div class="form-group">
+                        <label>Calculator Type</label>
+                        <div class="form-row">
+                            <button class="selector-option active" data-calc-type="standard">Standard Loan</button>
+                            <button class="selector-option" data-calc-type="canadian">Canadian Mortgage</button>
+                            <button class="selector-option" data-calc-type="interest-only">Interest Only</button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="loanAmount"><i class="fas fa-dollar-sign"></i> Loan Amount</label>
+                            <input type="number" id="loanAmount" min="1000" max="10000000" step="1000" value="300000">
+                        </div>
+                        <div class="form-group">
+                            <label for="interestRate"><i class="fas fa-percentage"></i> Annual Interest Rate (%)</label>
+                            <input type="number" id="interestRate" min="0.1" max="20" step="0.01" value="4.5">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="loanTerm"><i class="fas fa-calendar-alt"></i> Loan Term (Years)</label>
+                            <input type="number" id="loanTerm" min="1" max="40" step="1" value="25">
+                        </div>
+                        <div class="form-group">
+                            <label for="amortizationPeriod"><i class="fas fa-calendar-check"></i> Amortization Period</label>
+                            <input type="number" id="amortizationPeriod" min="1" max="40" step="1" value="25">
+                        </div>
+                    </div>
+                    
+                    <!-- Advanced Options -->
+                    <div class="advanced-section">
+                        <h3><i class="fas fa-cogs"></i> Advanced Options</h3>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="paymentFrequency"><i class="fas fa-calendar-week"></i> Payment Frequency</label>
+                                <select id="paymentFrequency">
+                                    <option value="1">Annual</option>
+                                    <option value="2">Semi-Annual</option>
+                                    <option value="4">Quarterly</option>
+                                    <option value="12" selected>Monthly</option>
+                                    <option value="24">Semi-Monthly</option>
+                                    <option value="26">Bi-Weekly</option>
+                                    <option value="52">Weekly</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="compoundingFrequency"><i class="fas fa-chart-bar"></i> Compounding Frequency</label>
+                                <select id="compoundingFrequency">
+                                    <option value="1">Annual</option>
+                                    <option value="2">Semi-Annual</option>
+                                    <option value="4">Quarterly</option>
+                                    <option value="12" selected>Monthly</option>
+                                    <option value="365">Daily</option>
+                                    <option value="continuous">Continuous</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="startDate"><i class="fas fa-calendar-day"></i> Start Date</label>
+                                <input type="date" id="startDate" value="2024-01-01">
+                            </div>
+                            <div class="form-group">
+                                <label for="dayCount"><i class="fas fa-calculator"></i> Day Count Convention</label>
+                                <select id="dayCount">
+                                    <option value="actual/actual">Actual/Actual</option>
+                                    <option value="30/360">30/360</option>
+                                    <option value="actual/365">Actual/365</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label><i class="fas fa-balloon"></i> Balloon Payment</label>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <select id="balloonType">
+                                        <option value="none">No Balloon</option>
+                                        <option value="percentage">Percentage of Loan</option>
+                                        <option value="fixed">Fixed Amount</option>
+                                        <option value="final">Final Payment</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <input type="number" id="balloonAmount" placeholder="Balloon Amount" disabled>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Irregular Payments -->
+                    <div class="advanced-section">
+                        <h3><i class="fas fa-random"></i> Irregular Payments</h3>
+                        <div class="irregular-payments" id="irregularPaymentsContainer">
+                            <!-- Irregular payments will be added here -->
+                        </div>
+                        <button class="secondary-btn" id="addIrregularPayment">
+                            <i class="fas fa-plus"></i> Add Irregular Payment
+                        </button>
+                    </div>
+                    
+                    <div class="action-buttons">
+                        <button class="primary-btn" id="calculateLoan">
+                            <i class="fas fa-calculator"></i> Calculate Amortization
+                        </button>
+                        <button class="secondary-btn" id="resetLoan">
+                            <i class="fas fa-redo"></i> Reset
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="results-section">
+                    <div class="summary-cards">
+                        <div class="summary-card">
+                            <h3>Periodic Payment</h3>
+                            <div class="value" id="periodicPayment">$1,667.63</div>
+                            <div class="subtext" id="paymentFrequencyLabel">Monthly</div>
+                        </div>
+                        <div class="summary-card">
+                            <h3>Total Interest</h3>
+                            <div class="value" id="totalInterest">$200,289.60</div>
+                            <div class="subtext">Over loan term</div>
+                        </div>
+                        <div class="summary-card">
+                            <h3>Total Payment</h3>
+                            <div class="value" id="totalPayment">$500,289.60</div>
+                            <div class="subtext">Principal + Interest</div>
+                        </div>
+                        <div class="summary-card">
+                            <h3>Effective Rate</h3>
+                            <div class="value" id="effectiveRate">4.58%</div>
+                            <div class="subtext">With compounding</div>
+                        </div>
+                    </div>
+                    
+                    <h3 style="margin: 30px 0 15px 0; color: #2c3e50;">
+                        <i class="fas fa-table"></i> Amortization Schedule
+                    </h3>
+                    <div class="amortization-table-container">
+                        <table id="amortizationTable">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Payment</th>
+                                    <th>Principal</th>
+                                    <th>Interest</th>
+                                    <th>Balance</th>
+                                    <th>Type</th>
+                                </tr>
+                            </thead>
+                            <tbody id="amortizationTableBody">
+                                <!-- Table rows populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="chart-container">
+                        <canvas id="paymentChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- TVM Calculator Tab -->
+            <div class="tab-content hidden" id="tvm-calc">
+                <div class="input-section">
+                    <h2 style="color: #2c3e50; margin-bottom: 30px;">
+                        <i class="fas fa-chart-line"></i> Time Value of Money Calculator
+                    </h2>
+                    
+                    <div class="tvm-inputs">
+                        <div class="form-group">
+                            <label for="pv"><i class="fas fa-dollar-sign"></i> Present Value (PV)</label>
+                            <input type="number" id="pv" placeholder="Present Value">
+                        </div>
+                        <div class="form-group">
+                            <label for="fv"><i class="fas fa-chart-bar"></i> Future Value (FV)</label>
+                            <input type="number" id="fv" placeholder="Future Value">
+                        </div>
+                        <div class="form-group">
+                            <label for="rate"><i class="fas fa-percentage"></i> Interest Rate (%)</label>
+                            <input type="number" id="rate" step="0.01" value="5.0">
+                        </div>
+                        <div class="form-group">
+                            <label for="periods"><i class="fas fa-calendar-alt"></i> Number of Periods</label>
+                            <input type="number" id="periods" value="10">
+                        </div>
+                        <div class="form-group">
+                            <label for="payment"><i class="fas fa-money-bill-wave"></i> Periodic Payment</label>
+                            <input type="number" id="payment" placeholder="Payment per period">
+                        </div>
+                        <div class="form-group">
+                            <label for="tvmCompounding"><i class="fas fa-chart-bar"></i> Compounding</label>
+                            <select id="tvmCompounding">
+                                <option value="annual">Annual</option>
+                                <option value="semi-annual">Semi-Annual</option>
+                                <option value="quarterly">Quarterly</option>
+                                <option value="monthly" selected>Monthly</option>
+                                <option value="continuous">Continuous</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Payment Timing</label>
+                        <div class="form-row">
+                            <button class="selector-option active" data-timing="end">End of Period</button>
+                            <button class="selector-option" data-timing="beginning">Beginning of Period</button>
+                        </div>
+                    </div>
+                    
+                    <div class="action-buttons">
+                        <button class="primary-btn" id="calculatePV">
+                            <i class="fas fa-search-dollar"></i> Calculate PV
+                        </button>
+                        <button class="primary-btn" id="calculateFV">
+                            <i class="fas fa-chart-line"></i> Calculate FV
+                        </button>
+                        <button class="primary-btn" id="calculateRate">
+                            <i class="fas fa-percentage"></i> Calculate Rate
+                        </button>
+                        <button class="primary-btn" id="calculatePeriods">
+                            <i class="fas fa-calendar"></i> Calculate Periods
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="results-section">
+                    <div class="tvm-result" id="tvmResult">
+                        <h3>TVM Calculation Result</h3>
+                        <h2 id="tvmResultValue">$0.00</h2>
+                        <p id="tvmResultDescription">Enter values and select calculation type</p>
+                    </div>
+                    
+                    <div class="advanced-section">
+                        <h3><i class="fas fa-lightbulb"></i> TVM Formulas</h3>
+                        <div style="margin-top: 20px;">
+                            <p><strong>Future Value:</strong> FV = PV × (1 + r)ⁿ + PMT × [(1 + r)ⁿ - 1]/r</p>
+                            <p><strong>Present Value:</strong> PV = FV/(1 + r)ⁿ + PMT × [1 - (1 + r)⁻ⁿ]/r</p>
+                            <p><strong>Continuous Compounding:</strong> FV = PV × e^(r×n)</p>
+                        </div>
+                    </div>
+                    
+                    <div class="chart-container">
+                        <canvas id="tvmChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Scenario Comparison Tab -->
+            <div class="tab-content hidden" id="scenario-compare">
+                <div class="input-section">
+                    <h2 style="color: #2c3e50; margin-bottom: 30px;">
+                        <i class="fas fa-balance-scale"></i> Scenario Comparison
+                    </h2>
+                    
+                    <div class="scenario-comparison">
+                        <div class="scenario-card active" id="scenarioA">
+                            <h3><i class="fas fa-home"></i> Scenario A</h3>
+                            <div class="form-group">
+                                <label>Loan Amount</label>
+                                <input type="number" class="scenario-input" data-scenario="A" data-field="amount" value="300000">
+                            </div>
+                            <div class="form-group">
+                                <label>Interest Rate (%)</label>
+                                <input type="number" class="scenario-input" data-scenario="A" data-field="rate" value="4.5">
+                            </div>
+                            <div class="form-group">
+                                <label>Term (Years)</label>
+                                <input type="number" class="scenario-input" data-scenario="A" data-field="term" value="25">
+                            </div>
+                        </div>
+                        
+                        <div class="scenario-card" id="scenarioB">
+                            <h3><i class="fas fa-building"></i> Scenario B</h3>
+                            <div class="form-group">
+                                <label>Loan Amount</label>
+                                <input type="number" class="scenario-input" data-scenario="B" data-field="amount" value="300000">
+                            </div>
+                            <div class="form-group">
+                                <label>Interest Rate (%)</label>
+                                <input type="number" class="scenario-input" data-scenario="B" data-field="rate" value="3.5">
+                            </div>
+                            <div class="form-group">
+                                <label>Term (Years)</label>
+                                <input type="number" class="scenario-input" data-scenario="B" data-field="term" value="15">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="action-buttons" style="margin-top: 30px;">
+                        <button class="primary-btn" id="compareScenarios">
+                            <i class="fas fa-balance-scale-left"></i> Compare Scenarios
+                        </button>
+                        <button class="secondary-btn" id="addScenario">
+                            <i class="fas fa-plus"></i> Add Scenario
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="results-section">
+                    <h3 style="color: #2c3e50; margin-bottom: 20px;">
+                        <i class="fas fa-chart-bar"></i> Comparison Results
+                    </h3>
+                    
+                    <div class="summary-cards">
+                        <div class="summary-card">
+                            <h3>Monthly Payment</h3>
+                            <div class="value">
+                                <span style="color: #667eea;">$1,667</span> vs 
+                                <span style="color: #764ba2;">$2,144</span>
+                            </div>
+                            <div class="subtext">Scenario A vs B</div>
+                        </div>
+                        <div class="summary-card">
+                            <h3>Total Interest</h3>
+                            <div class="value">
+                                <span style="color: #667eea;">$200,289</span> vs 
+                                <span style="color: #764ba2;">$85,984</span>
+                            </div>
+                            <div class="subtext">Savings: $114,305</div>
+                        </div>
+                        <div class="summary-card">
+                            <h3>Payoff Date</h3>
+                            <div class="value">
+                                <span style="color: #667eea;">2049</span> vs 
+                                <span style="color: #764ba2;">2039</span>
+                            </div>
+                            <div class="subtext">10 years earlier</div>
+                        </div>
+                    </div>
+                    
+                    <div class="chart-container">
+                        <canvas id="comparisonChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Cash Flow Analysis Tab -->
+            <div class="tab-content hidden" id="cash-flow">
+                <div class="input-section">
+                    <h2 style="color: #2c3e50; margin-bottom: 30px;">
+                        <i class="fas fa-money-bill-wave"></i> Cash Flow Analysis
+                    </h2>
+                    
+                    <div class="advanced-section">
+                        <h3><i class="fas fa-stream"></i> Cash Flow Stream</h3>
+                        <div id="cashFlowEntries">
+                            <!-- Cash flow entries will be added here -->
+                        </div>
+                        <button class="secondary-btn" id="addCashFlow">
+                            <i class="fas fa-plus"></i> Add Cash Flow
+                        </button>
+                    </div>
+                    
+                    <div class="form-group" style="margin-top: 30px;">
+                        <label for="discountRate"><i class="fas fa-percentage"></i> Discount Rate (%)</label>
+                        <input type="number" id="discountRate" step="0.01" value="5.0">
+                    </div>
+                    
+                    <div class="action-buttons">
+                        <button class="primary-btn" id="calculateNPV">
+                            <i class="fas fa-calculator"></i> Calculate NPV
+                        </button>
+                        <button class="primary-btn" id="calculateIRR">
+                            <i class="fas fa-search"></i> Calculate IRR
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="results-section">
+                    <div class="summary-cards">
+                        <div class="summary-card">
+                            <h3>Net Present Value (NPV)</h3>
+                            <div class="value" id="npvResult">$0.00</div>
+                            <div class="subtext">Discounted cash flows</div>
+                        </div>
+                        <div class="summary-card">
+                            <h3>Internal Rate of Return (IRR)</h3>
+                            <div class="value" id="irrResult">0.00%</div>
+                            <div class="subtext">Annualized return</div>
+                        </div>
+                        <div class="summary-card">
+                            <h3>Payback Period</h3>
+                            <div class="value" id="paybackPeriod">0 years</div>
+                            <div class="subtext">Time to recover investment</div>
+                        </div>
+                    </div>
+                    
+                    <div class="chart-container">
+                        <canvas id="cashFlowChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // ============================================
+        // ADVANCED FINANCIAL CALCULATOR IMPLEMENTATION
+        // ============================================
+        
+        class AdvancedFinancialCalculator {
+            constructor() {
+                this.PRECISION = 8;
+                this.DAYS_IN_YEAR = 365;
+                this.MIN_BALANCE = 0.01;
+            }
+            
+            // ============================================
+            // 1. MULTIPLE COMPOUNDING METHODS
+            // ============================================
+            
+            /**
+             * Calculate effective periodic rate with different compounding frequencies
+             */
+            calculateEffectiveRate(annualRate, compoundingFreq, paymentFreq) {
+                if (compoundingFreq === 'continuous') {
+                    // Continuous compounding: e^(r) - 1
+                    return Math.exp(annualRate / paymentFreq) - 1;
+                }
+                
+                const n = parseInt(compoundingFreq);
+                const p = parseInt(paymentFreq);
+                
+                if (n === p) {
+                    // Same frequency
+                    return annualRate / n;
+                } else if (n > p) {
+                    // More frequent compounding than payments
+                    return Math.pow(1 + annualRate / n, n / p) - 1;
+                } else {
+                    // Less frequent compounding than payments
+                    return annualRate / p;
+                }
+            }
+            
+            /**
+             * Calculate Canadian mortgage payments (compound interest)
+             */
+            calculateCanadianMortgage(principal, annualRate, paymentFreq, amortizationYears) {
+                // Canadian mortgages compound semi-annually
+                const semiAnnualRate = annualRate / 2;
+                const periods = amortizationYears * paymentFreq;
+                
+                // Calculate effective monthly rate from semi-annual compounding
+                const monthlyRate = Math.pow(1 + semiAnnualRate, 1/6) - 1;
+                
+                if (monthlyRate === 0) {
+                    return principal / periods;
+                }
+                
+                return principal * monthlyRate / (1 - Math.pow(1 + monthlyRate, -periods));
+            }
+            
+            // ============================================
+            // 2. DATE-ACCURATE CALCULATIONS
+            // ============================================
+            
+            /**
+             * Calculate days between dates using different conventions
+             */
+            calculateDaysBetween(date1, date2, convention = 'actual/actual') {
+                const timeDiff = Math.abs(date2 - date1);
+                const daysDiff = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+                
+                switch(convention) {
+                    case '30/360':
+                        // 30 days per month, 360 days per year
+                        const d1 = date1.getDate();
+                        const d2 = date2.getDate();
+                        const m1 = date1.getMonth() + 1;
+                        const m2 = date2.getMonth() + 1;
+                        const y1 = date1.getFullYear();
+                        const y2 = date2.getFullYear();
+                        
+                        let days = 360 * (y2 - y1) + 30 * (m2 - m1) + (d2 - d1);
+                        return days;
+                        
+                    case 'actual/365':
+                        return daysDiff;
+                        
+                    case 'actual/actual':
+                    default:
+                        return daysDiff;
+                }
+            }
+            
+            /**
+             * Calculate interest for actual days
+             */
+            calculateDailyInterest(principal, annualRate, days, convention = 'actual/actual') {
+                let daysInYear = this.DAYS_IN_YEAR;
+                
+                if (convention === 'actual/365') {
+                    daysInYear = 365;
+                } else if (convention === '30/360') {
+                    daysInYear = 360;
+                }
+                
+                return principal * annualRate * days / daysInYear;
+            }
+            
+            // ============================================
+            // 3. BALLOON PAYMENTS
+            // ============================================
+            
+            /**
+             * Calculate payments with balloon
+             */
+            calculateWithBalloon(principal, annualRate, paymentFreq, termYears, balloonType, balloonAmount) {
+                const periods = termYears * paymentFreq;
+                const periodicRate = annualRate / paymentFreq;
+                
+                if (balloonType === 'none') {
+                    // Standard amortization
+                    return this.calculateAmortizationPayment(principal, periodicRate, periods);
+                } else if (balloonType === 'final') {
+                    // Balloon equals remaining balance
+                    const balloon = principal * Math.pow(1 + periodicRate, periods);
+                    return 0; // Only balloon payment
+                } else {
+                    // Fixed balloon amount
+                    const pvBalloon = balloonAmount / Math.pow(1 + periodicRate, periods);
+                    const pvLoan = principal - pvBalloon;
+                    
+                    if (pvLoan <= 0) {
+                        return 0;
+                    }
+                    
+                    return this.calculateAmortizationPayment(pvLoan, periodicRate, periods);
+                }
+            }
+            
+            calculateAmortizationPayment(principal, periodicRate, periods) {
+                if (periodicRate === 0) {
+                    return principal / periods;
+                }
+                
+                return principal * periodicRate / (1 - Math.pow(1 + periodicRate, -periods));
+            }
+            
+            // ============================================
+            // 4. IRREGULAR PAYMENTS
+            // ============================================
+            
+            /**
+             * Generate schedule with irregular payments
+             */
+            generateScheduleWithIrregular(params) {
+                const {
+                    principal,
+                    annualRate,
+                    paymentFreq,
+                    amortizationYears,
+                    startDate,
+                    irregularPayments = [],
+                    dayCountConvention = 'actual/actual'
+                } = params;
+                
+                const schedule = [];
+                let balance = principal;
+                const periodicRate = annualRate / paymentFreq;
+                const standardPayment = this.calculateAmortizationPayment(
+                    principal, periodicRate, amortizationYears * paymentFreq
+                );
+                
+                let currentDate = new Date(startDate);
+                
+                // Sort irregular payments by date
+                irregularPayments.sort((a, b) => new Date(a.date) - new Date(b.date));
+                
+                for (let period = 1; period <= amortizationYears * paymentFreq && balance > 0; period++) {
+                    // Calculate next payment date
+                    let paymentDate = new Date(currentDate);
+                    if (paymentFreq === 12) {
+                        paymentDate.setMonth(paymentDate.getMonth() + 1);
+                    } else if (paymentFreq === 24) {
+                        paymentDate.setDate(paymentDate.getDate() + 15);
+                    } else if (paymentFreq === 52) {
+                        paymentDate.setDate(paymentDate.getDate() + 7);
+                    } else if (paymentFreq === 26) {
+                        paymentDate.setDate(paymentDate.getDate() + 14);
+                    } else {
+                        paymentDate.setMonth(paymentDate.getMonth() + 12 / paymentFreq);
+                    }
+                    
+                    // Check for irregular payments on this date
+                    let irregularAmount = 0;
+                    const irregularOnDate = irregularPayments.find(p => 
+                        this.isSameDate(new Date(p.date), paymentDate)
+                    );
+                    
+                    if (irregularOnDate) {
+                        irregularAmount = irregularOnDate.amount;
+                    }
+                    
+                    // Calculate interest based on days
+                    const days = this.calculateDaysBetween(currentDate, paymentDate, dayCountConvention);
+                    const interest = this.calculateDailyInterest(balance, annualRate, days, dayCountConvention);
+                    
+                    let payment = standardPayment + irregularAmount;
+                    let principalPayment = payment - interest;
+                    
+                    // Handle overpayment
+                    if (principalPayment > balance) {
+                        principalPayment = balance;
+                        payment = principalPayment + interest;
+                    }
+                    
+                    balance -= principalPayment;
+                    
+                    if (Math.abs(balance) < this.MIN_BALANCE) {
+                        balance = 0;
+                    }
+                    
+                    schedule.push({
+                        period,
+                        date: new Date(paymentDate),
+                        payment: this.roundCurrency(payment),
+                        principal: this.roundCurrency(principalPayment),
+                        interest: this.roundCurrency(interest),
+                        balance: this.roundCurrency(balance),
+                        type: irregularOnDate ? 'irregular' : 'regular',
+                        irregularAmount: this.roundCurrency(irregularAmount)
+                    });
+                    
+                    currentDate = paymentDate;
+                }
+                
+                return schedule;
+            }
+            
+            isSameDate(date1, date2) {
+                return date1.getFullYear() === date2.getFullYear() &&
+                       date1.getMonth() === date2.getMonth() &&
+                       date1.getDate() === date2.getDate();
+            }
+            
+            // ============================================
+            // 5. TIME VALUE OF MONEY CALCULATIONS
+            // ============================================
+            
+            /**
+             * Calculate Future Value
+             */
+            calculateFV(pv, rate, periods, pmt = 0, type = 0) {
+                // type: 0 = end of period, 1 = beginning of period
+                const r = rate;
+                const n = periods;
+                
+                if (r === 0) {
+                    return pv + pmt * n;
+                }
+                
+                let fv = pv * Math.pow(1 + r, n);
+                
+                if (pmt !== 0) {
+                    if (type === 0) {
+                        // End of period
+                        fv += pmt * (Math.pow(1 + r, n) - 1) / r;
+                    } else {
+                        // Beginning of period
+                        fv += pmt * (Math.pow(1 + r, n) - 1) / r * (1 + r);
+                    }
+                }
+                
+                return this.roundCurrency(fv);
+            }
+            
+            /**
+             * Calculate Present Value
+             */
+            calculatePV(fv, rate, periods, pmt = 0, type = 0) {
+                const r = rate;
+                const n = periods;
+                
+                if (r === 0) {
+                    return fv - pmt * n;
+                }
+                
+                let pv = fv / Math.pow(1 + r, n);
+                
+                if (pmt !== 0) {
+                    if (type === 0) {
+                        // End of period
+                        pv += pmt * (1 - Math.pow(1 + r, -n)) / r;
+                    } else {
+                        // Beginning of period
+                        pv += pmt * (1 - Math.pow(1 + r, -n)) / r * (1 + r);
+                    }
+                }
+                
+                return this.roundCurrency(pv);
+            }
+            
+            /**
+             * Calculate Net Present Value
+             */
+            calculateNPV(cashFlows, discountRate) {
+                let npv = 0;
+                
+                for (let i = 0; i < cashFlows.length; i++) {
+                    npv += cashFlows[i] / Math.pow(1 + discountRate, i);
+                }
+                
+                return this.roundCurrency(npv);
+            }
+            
+            /**
+             * Calculate Internal Rate of Return using Newton-Raphson method
+             */
+            calculateIRR(cashFlows, guess = 0.1, maxIterations = 1000, tolerance = 0.00001) {
+                let x = guess;
+                
+                for (let i = 0; i < maxIterations; i++) {
+                    const npv = this.calculateNPVForIRR(cashFlows, x);
+                    const npvPrime = this.calculateNPVPrime(cashFlows, x);
+                    
+                    if (Math.abs(npvPrime) < tolerance) {
+                        break;
+                    }
+                    
+                    const xNew = x - npv / npvPrime;
+                    
+                    if (Math.abs(xNew - x) < tolerance) {
+                        return xNew;
+                    }
+                    
+                    x = xNew;
+                }
+                
+                return x;
+            }
+            
+            calculateNPVForIRR(cashFlows, rate) {
+                let npv = 0;
+                
+                for (let i = 0; i < cashFlows.length; i++) {
+                    npv += cashFlows[i] / Math.pow(1 + rate, i);
+                }
+                
+                return npv;
+            }
+            
+            calculateNPVPrime(cashFlows, rate) {
+                let sum = 0;
+                
+                for (let i = 1; i < cashFlows.length; i++) {
+                    sum += i * cashFlows[i] / Math.pow(1 + rate, i + 1);
+                }
+                
+                return -sum;
+            }
+            
+            // ============================================
+            // 6. SCENARIO COMPARISON
+            // ============================================
+            
+            /**
+             * Compare multiple loan scenarios
+             */
+            compareScenarios(scenarios) {
+                return scenarios.map(scenario => {
+                    const periodicPayment = this.calculateAmortizationPayment(
+                        scenario.amount,
+                        scenario.rate / scenario.paymentFreq / 100,
+                        scenario.term * scenario.paymentFreq
+                    );
+                    
+                    const totalPayment = periodicPayment * scenario.term * scenario.paymentFreq;
+                    const totalInterest = totalPayment - scenario.amount;
+                    
+                    return {
+                        ...scenario,
+                        periodicPayment: this.roundCurrency(periodicPayment),
+                        totalPayment: this.roundCurrency(totalPayment),
+                        totalInterest: this.roundCurrency(totalInterest),
+                        interestPercentage: this.roundCurrency((totalInterest / scenario.amount) * 100)
+                    };
+                });
+            }
+            
+            // ============================================
+            // UTILITY METHODS
+            // ============================================
+            
+            roundCurrency(value) {
+                return Math.round(value * Math.pow(10, 2)) / Math.pow(10, 2);
+            }
+            
+            roundPercentage(value) {
+                return Math.round(value * Math.pow(10, 4)) / Math.pow(10, 2);
+            }
+        }
+
+        // ============================================
+        // APPLICATION IMPLEMENTATION
+        // ============================================
+        
+        class FinancialApplication {
+            constructor() {
+                this.calculator = new AdvancedFinancialCalculator();
+                this.irregularPayments = [];
+                this.cashFlows = [];
+                this.scenarios = [];
+                this.charts = {};
+                
+                this.initializeElements();
+                this.setupEventListeners();
+                this.initializeCharts();
+                this.loadSampleData();
+            }
+            
+            initializeElements() {
+                // Store references to all DOM elements
+                this.elements = {
+                    // Tabs
+                    tabButtons: document.querySelectorAll('.tab-button'),
+                    tabContents: document.querySelectorAll('.tab-content'),
+                    
+                    // Loan Calculator
+                    loanAmount: document.getElementById('loanAmount'),
+                    interestRate: document.getElementById('interestRate'),
+                    loanTerm: document.getElementById('loanTerm'),
+                    amortizationPeriod: document.getElementById('amortizationPeriod'),
+                    paymentFrequency: document.getElementById('paymentFrequency'),
+                    compoundingFrequency: document.getElementById('compoundingFrequency'),
+                    startDate: document.getElementById('startDate'),
+                    dayCount: document.getElementById('dayCount'),
+                    balloonType: document.getElementById('balloonType'),
+                    balloonAmount: document.getElementById('balloonAmount'),
+                    irregularPaymentsContainer: document.getElementById('irregularPaymentsContainer'),
+                    
+                    // Results
+                    periodicPayment: document.getElementById('periodicPayment'),
+                    totalInterest: document.getElementById('totalInterest'),
+                    totalPayment: document.getElementById('totalPayment'),
+                    effectiveRate: document.getElementById('effectiveRate'),
+                    paymentFrequencyLabel: document.getElementById('paymentFrequencyLabel'),
+                    amortizationTableBody: document.getElementById('amortizationTableBody'),
+                    
+                    // Buttons
+                    calculateLoan: document.getElementById('calculateLoan'),
+                    resetLoan: document.getElementById('resetLoan'),
+                    addIrregularPayment: document.getElementById('addIrregularPayment'),
+                    
+                    // TVM Calculator
+                    pv: document.getElementById('pv'),
+                    fv: document.getElementById('fv'),
+                    rate: document.getElementById('rate'),
+                    periods: document.getElementById('periods'),
+                    payment: document.getElementById('payment'),
+                    tvmCompounding: document.getElementById('tvmCompounding'),
+                    calculatePV: document.getElementById('calculatePV'),
+                    calculateFV: document.getElementById('calculateFV'),
+                    calculateRate: document.getElementById('calculateRate'),
+                    calculatePeriods: document.getElementById('calculatePeriods'),
+                    tvmResult: document.getElementById('tvmResult'),
+                    tvmResultValue: document.getElementById('tvmResultValue'),
+                    tvmResultDescription: document.getElementById('tvmResultDescription'),
+                    
+                    // Scenario Comparison
+                    compareScenarios: document.getElementById('compareScenarios'),
+                    addScenario: document.getElementById('addScenario'),
+                    
+                    // Cash Flow Analysis
+                    discountRate: document.getElementById('discountRate'),
+                    calculateNPV: document.getElementById('calculateNPV'),
+                    calculateIRR: document.getElementById('calculateIRR'),
+                    npvResult: document.getElementById('npvResult'),
+                    irrResult: document.getElementById('irrResult'),
+                    paybackPeriod: document.getElementById('paybackPeriod'),
+                    cashFlowEntries: document.getElementById('cashFlowEntries'),
+                    addCashFlow: document.getElementById('addCashFlow')
+                };
+            }
+            
+            setupEventListeners() {
+                // Tab Navigation
+                this.elements.tabButtons.forEach(button => {
+                    button.addEventListener('click', () => this.switchTab(button.dataset.tab));
+                });
+                
+                // Loan Calculator
+                this.elements.calculateLoan.addEventListener('click', () => this.calculateLoan());
+                this.elements.resetLoan.addEventListener('click', () => this.resetLoanCalculator());
+                this.elements.addIrregularPayment.addEventListener('click', () => this.addIrregularPayment());
+                this.elements.balloonType.addEventListener('change', (e) => this.toggleBalloonAmount(e.target.value));
+                
+                // TVM Calculator
+                this.elements.calculatePV.addEventListener('click', () => this.calculateTVM('pv'));
+                this.elements.calculateFV.addEventListener('click', () => this.calculateTVM('fv'));
+                this.elements.calculateRate.addEventListener('click', () => this.calculateTVM('rate'));
+                this.elements.calculatePeriods.addEventListener('click', () => this.calculateTVM('periods'));
+                
+                // Scenario Comparison
+                this.elements.compareScenarios.addEventListener('click', () => this.compareScenarios());
+                this.elements.addScenario.addEventListener('click', () => this.addScenario());
+                
+                // Cash Flow Analysis
+                this.elements.calculateNPV.addEventListener('click', () => this.calculateCashFlowNPV());
+                this.elements.calculateIRR.addEventListener('click', () => this.calculateCashFlowIRR());
+                this.elements.addCashFlow.addEventListener('click', () => this.addCashFlowEntry());
+                
+                // Initialize selector options
+                document.querySelectorAll('.selector-option').forEach(option => {
+                    option.addEventListener('click', (e) => this.handleSelectorOption(e.target));
+                });
+                
+                // Scenario inputs
+                document.querySelectorAll('.scenario-input').forEach(input => {
+                    input.addEventListener('input', () => this.updateScenario(input));
+                });
+            }
+            
+            initializeCharts() {
+                // Loan Amortization Chart
+                const loanCtx = document.getElementById('paymentChart').getContext('2d');
+                this.charts.loan = new Chart(loanCtx, {
+                    type: 'line',
+                    data: {
+                        labels: [],
+                        datasets: [
+                            {
+                                label: 'Principal Balance',
+                                data: [],
+                                borderColor: '#667eea',
+                                backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                                fill: true,
+                                tension: 0.4
+                            },
+                            {
+                                label: 'Cumulative Interest',
+                                data: [],
+                                borderColor: '#764ba2',
+                                backgroundColor: 'rgba(118, 75, 162, 0.1)',
+                                fill: true,
+                                tension: 0.4
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'Amortization Schedule'
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: (context) => {
+                                        return `${context.dataset.label}: $${context.raw.toLocaleString()}`;
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: {
+                                    callback: (value) => `$${value.toLocaleString()}`
+                                }
+                            }
+                        }
+                    }
+                });
+                
+                // TVM Chart
+                const tvmCtx = document.getElementById('tvmChart').getContext('2d');
+                this.charts.tvm = new Chart(tvmCtx, {
+                    type: 'line',
+                    data: {
+                        labels: [],
+                        datasets: [
+                            {
+                                label: 'Future Value Growth',
+                                data: [],
+                                borderColor: '#4CAF50',
+                                backgroundColor: 'rgba(76, 175, 80, 0.1)',
+                                fill: true
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'Time Value of Money'
+                            }
+                        }
+                    }
+                });
+                
+                // Comparison Chart
+                const compareCtx = document.getElementById('comparisonChart').getContext('2d');
+                this.charts.comparison = new Chart(compareCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Scenario A', 'Scenario B'],
+                        datasets: [
+                            {
+                                label: 'Total Interest',
+                                data: [200289, 85984],
+                                backgroundColor: ['#667eea', '#764ba2']
+                            },
+                            {
+                                label: 'Monthly Payment',
+                                data: [1667, 2144],
+                                backgroundColor: ['#4CAF50', '#FF9800']
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'Scenario Comparison'
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+                
+                // Cash Flow Chart
+                const cashFlowCtx = document.getElementById('cashFlowChart').getContext('2d');
+                this.charts.cashFlow = new Chart(cashFlowCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: [],
+                        datasets: [
+                            {
+                                label: 'Cash Flow',
+                                data: [],
+                                backgroundColor: [],
+                                borderColor: '#333',
+                                borderWidth: 1
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'Cash Flow Analysis'
+                            }
+                        }
+                    }
+                });
+            }
+            
+            // ============================================
+            // TAB MANAGEMENT
+            // ============================================
+            
+            switchTab(tabId) {
+                // Update active tab button
+                this.elements.tabButtons.forEach(button => {
+                    button.classList.toggle('active', button.dataset.tab === tabId);
+                });
+                
+                // Show active tab content
+                this.elements.tabContents.forEach(content => {
+                    content.classList.toggle('active', content.id === tabId);
+                    content.classList.toggle('hidden', content.id !== tabId);
+                });
+                
+                // Load data for the tab
+                if (tabId === 'loan-calc') {
+                    this.calculateLoan();
+                } else if (tabId === 'tvm-calc') {
+                    this.calculateTVM('fv');
+                } else if (tabId === 'scenario-compare') {
+                    this.compareScenarios();
+                } else if (tabId === 'cash-flow') {
+                    this.updateCashFlowChart();
+                }
+            }
+            
+            // ============================================
+            // LOAN CALCULATOR FUNCTIONS
+            // ============================================
+            
+            calculateLoan() {
+                // Gather inputs
+                const principal = parseFloat(this.elements.loanAmount.value);
+                const annualRate = parseFloat(this.elements.interestRate.value) / 100;
+                const paymentFreq = parseInt(this.elements.paymentFrequency.value);
+                const amortizationYears = parseInt(this.elements.amortizationYears.value || this.elements.loanTerm.value);
+                const compoundingFreq = this.elements.compoundingFrequency.value;
+                const startDate = new Date(this.elements.startDate.value);
+                const dayCountConvention = this.elements.dayCount.value;
+                const balloonType = this.elements.balloonType.value;
+                const balloonAmount = parseFloat(this.elements.balloonAmount.value) || 0;
+                
+                // Calculate effective rate
+                const effectiveRate = this.calculator.calculateEffectiveRate(
+                    annualRate, 
+                    compoundingFreq, 
+                    paymentFreq
+                );
+                
+                // Generate schedule
+                const schedule = this.calculator.generateScheduleWithIrregular({
+                    principal,
+                    annualRate,
+                    paymentFreq,
+                    amortizationYears,
+                    startDate,
+                    irregularPayments: this.irregularPayments,
+                    dayCountConvention
+                });
+                
+                // Calculate totals
+                const totalInterest = schedule.reduce((sum, row) => sum + row.interest, 0);
+                const totalPayment = principal + totalInterest;
+                const periodicPayment = schedule.length > 0 ? schedule[0].payment : 0;
+                
+                // Update UI
+                this.elements.periodicPayment.textContent = `$${this.calculator.roundCurrency(periodicPayment).toLocaleString()}`;
+                this.elements.totalInterest.textContent = `$${this.calculator.roundCurrency(totalInterest).toLocaleString()}`;
+                this.elements.totalPayment.textContent = `$${this.calculator.roundCurrency(totalPayment).toLocaleString()}`;
+                this.elements.effectiveRate.textContent = `${this.calculator.roundPercentage(effectiveRate * 100)}%`;
+                
+                // Update frequency label
+                const frequency = parseInt(this.elements.paymentFrequency.value);
+                const labels = {
+                    1: 'Annual', 2: 'Semi-Annual', 4: 'Quarterly', 
+                    12: 'Monthly', 24: 'Semi-Monthly', 26: 'Bi-Weekly', 52: 'Weekly'
+                };
+                this.elements.paymentFrequencyLabel.textContent = labels[frequency] || 'Periodic';
+                
+                // Update amortization table
+                this.updateAmortizationTable(schedule);
+                
+                // Update chart
+                this.updateLoanChart(schedule);
+            }
+            
+            updateAmortizationTable(schedule) {
+                const tbody = this.elements.amortizationTableBody;
+                tbody.innerHTML = '';
+                
+                // Show limited rows for performance
+                const displayRows = schedule.length <= 36 ? schedule : [
+                    ...schedule.slice(0, 12),
+                    null, // Separator
+                    ...schedule.slice(-12)
+                ];
+                
+                displayRows.forEach((row, index) => {
+                    const tr = document.createElement('tr');
+                    
+                    if (row === null) {
+                        // Separator row
+                        tr.innerHTML = `
+                            <td colspan="6" style="text-align: center; color: #666; font-style: italic; padding: 15px;">
+                                ... ${schedule.length - 24} more payments ...
+                            </td>
+                        `;
+                    } else {
+                        const dateStr = row.date.toLocaleDateString();
+                        const typeIcon = row.type === 'irregular' ? '⭐ ' : '';
+                        
+                        tr.innerHTML = `
+                            <td>${dateStr}</td>
+                            <td>$${row.payment.toLocaleString()}</td>
+                            <td>$${row.principal.toLocaleString()}</td>
+                            <td>$${row.interest.toLocaleString()}</td>
+                            <td>$${row.balance.toLocaleString()}</td>
+                            <td>${typeIcon}${row.type}</td>
+                        `;
+                    }
+                    
+                    tbody.appendChild(tr);
+                });
+            }
+            
+            updateLoanChart(schedule) {
+                const labels = schedule.map(row => 
+                    row.date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' })
+                );
+                const balances = schedule.map(row => row.balance);
+                const cumulativeInterest = schedule.reduce((acc, row, index) => {
+                    acc.push((acc[index - 1] || 0) + row.interest);
+                    return acc;
+                }, []);
+                
+                this.charts.loan.data.labels = labels;
+                this.charts.loan.data.datasets[0].data = balances;
+                this.charts.loan.data.datasets[1].data = cumulativeInterest;
+                this.charts.loan.update();
+            }
+            
+            addIrregularPayment() {
+                const container = this.elements.irregularPaymentsContainer;
+                const paymentId = Date.now();
+                
+                const paymentDiv = document.createElement('div');
+                paymentDiv.className = 'payment-item';
+                paymentDiv.dataset.id = paymentId;
+                
+                paymentDiv.innerHTML = `
+                    <input type="date" class="irregular-date" value="${new Date().toISOString().split('T')[0]}">
+                    <input type="number" class="irregular-amount" placeholder="Amount" value="1000">
+                    <select class="irregular-type">
+                        <option value="extra">Extra Payment</option>
+                        <option value="skip">Skip Payment</option>
+                        <option value="partial">Partial Payment</option>
+                    </select>
+                    <button class="remove-payment" data-id="${paymentId}">
+                        <i class="fas fa-times"></i>
+                    </button>
+                `;
+                
+                container.appendChild(paymentDiv);
+                
+                // Add to internal array
+                this.irregularPayments.push({
+                    id: paymentId,
+                    date: new Date().toISOString().split('T')[0],
+                    amount: 1000,
+                    type: 'extra'
+                });
+                
+                // Add event listener to remove button
+                paymentDiv.querySelector('.remove-payment').addEventListener('click', (e) => {
+                    const id = e.target.closest('.remove-payment').dataset.id;
+                    this.removeIrregularPayment(id);
+                });
+                
+                // Add event listeners to inputs
+                paymentDiv.querySelector('.irregular-date').addEventListener('change', (e) => {
+                    this.updateIrregularPayment(paymentId, 'date', e.target.value);
+                });
+                
+                paymentDiv.querySelector('.irregular-amount').addEventListener('input', (e) => {
+                    this.updateIrregularPayment(paymentId, 'amount', parseFloat(e.target.value) || 0);
+                });
+                
+                paymentDiv.querySelector('.irregular-type').addEventListener('change', (e) => {
+                    this.updateIrregularPayment(paymentId, 'type', e.target.value);
+                });
+            }
+            
+            updateIrregularPayment(id, field, value) {
+                const payment = this.irregularPayments.find(p => p.id == id);
+                if (payment) {
+                    payment[field] = value;
+                }
+            }
+            
+            removeIrregularPayment(id) {
+                this.irregularPayments = this.irregularPayments.filter(p => p.id != id);
+                const element = document.querySelector(`.payment-item[data-id="${id}"]`);
+                if (element) {
+                    element.remove();
+                }
+            }
+            
+            toggleBalloonAmount(type) {
+                const balloonAmount = this.elements.balloonAmount;
+                balloonAmount.disabled = type === 'none' || type === 'final';
+                
+                if (!balloonAmount.disabled) {
+                    balloonAmount.placeholder = type === 'percentage' ? 'Percentage %' : 'Fixed Amount';
+                }
+            }
+            
+            resetLoanCalculator() {
+                this.elements.loanAmount.value = '300000';
+                this.elements.interestRate.value = '4.5';
+                this.elements.loanTerm.value = '25';
+                this.elements.amortizationPeriod.value = '25';
+                this.elements.paymentFrequency.value = '12';
+                this.elements.compoundingFrequency.value = '12';
+                this.elements.startDate.value = new Date().toISOString().split('T')[0];
+                this.elements.dayCount.value = 'actual/actual';
+                this.elements.balloonType.value = 'none';
+                this.elements.balloonAmount.value = '';
+                this.elements.balloonAmount.disabled = true;
+                
+                this.irregularPayments = [];
+                this.elements.irregularPaymentsContainer.innerHTML = '';
+                
+                this.calculateLoan();
+            }
+            
+            // ============================================
+            // TVM CALCULATOR FUNCTIONS
+            // ============================================
+            
+            calculateTVM(calculationType) {
+                const pv = parseFloat(this.elements.pv.value) || 0;
+                const fv = parseFloat(this.elements.fv.value) || 0;
+                const rate = parseFloat(this.elements.rate.value) / 100 || 0;
+                const periods = parseFloat(this.elements.periods.value) || 0;
+                const payment = parseFloat(this.elements.payment.value) || 0;
+                const compounding = this.elements.tvmCompounding.value;
+                
+                // Adjust rate for compounding frequency
+                let adjustedRate = rate;
+                if (compounding === 'semi-annual') {
+                    adjustedRate = rate / 2;
+                } else if (compounding === 'quarterly') {
+                    adjustedRate = rate / 4;
+                } else if (compounding === 'monthly') {
+                    adjustedRate = rate / 12;
+                }
+                
+                let result;
+                let description;
+                
+                switch(calculationType) {
+                    case 'pv':
+                        result = this.calculator.calculatePV(fv, adjustedRate, periods, payment, 0);
+                        description = `Present Value of $${fv} at ${rate*100}% over ${periods} periods`;
+                        break;
+                        
+                    case 'fv':
+                        result = this.calculator.calculateFV(pv, adjustedRate, periods, payment, 0);
+                        description = `Future Value of $${pv} at ${rate*100}% over ${periods} periods`;
+                        break;
+                        
+                    case 'rate':
+                        // Simple rate calculation for demonstration
+                        if (fv > pv && periods > 0) {
+                            result = (Math.pow(fv / pv, 1 / periods) - 1) * 100;
+                            description = `Required rate to grow $${pv} to $${fv} in ${periods} periods`;
+                        } else {
+                            result = 0;
+                            description = 'Invalid inputs for rate calculation';
+                        }
+                        break;
+                        
+                    case 'periods':
+                        if (fv > pv && rate > 0) {
+                            result = Math.log(fv / pv) / Math.log(1 + adjustedRate);
+                            description = `Periods needed to grow $${pv} to $${fv} at ${rate*100}%`;
+                        } else {
+                            result = 0;
+                            description = 'Invalid inputs for periods calculation';
+                        }
+                        break;
+                }
+                
+                // Update UI
+                this.elements.tvmResultValue.textContent = `$${this.calculator.roundCurrency(result).toLocaleString()}`;
+                this.elements.tvmResultDescription.textContent = description;
+                
+                // Update chart
+                this.updateTVMChart(pv, adjustedRate, periods, payment);
+            }
+            
+            updateTVMChart(pv, rate, periods, payment) {
+                const labels = [];
+                const data = [];
+                
+                for (let i = 0; i <= periods; i++) {
+                    labels.push(`Period ${i}`);
+                    data.push(this.calculator.calculateFV(pv, rate, i, payment, 0));
+                }
+                
+                this.charts.tvm.data.labels = labels;
+                this.charts.tvm.data.datasets[0].data = data;
+                this.charts.tvm.update();
+            }
+            
+            // ============================================
+            // SCENARIO COMPARISON FUNCTIONS
+            // ============================================
+            
+            compareScenarios() {
+                const scenarios = [];
+                
+                // Get Scenario A
+                const scenarioA = {
+                    name: 'Scenario A',
+                    amount: parseFloat(document.querySelector('[data-scenario="A"][data-field="amount"]').value),
+                    rate: parseFloat(document.querySelector('[data-scenario="A"][data-field="rate"]').value),
+                    term: parseFloat(document.querySelector('[data-scenario="A"][data-field="term"]').value),
+                    paymentFreq: 12
+                };
+                
+                // Get Scenario B
+                const scenarioB = {
+                    name: 'Scenario B',
+                    amount: parseFloat(document.querySelector('[data-scenario="B"][data-field="amount"]').value),
+                    rate: parseFloat(document.querySelector('[data-scenario="B"][data-field="rate"]').value),
+                    term: parseFloat(document.querySelector('[data-scenario="B"][data-field="term"]').value),
+                    paymentFreq: 12
+                };
+                
+                scenarios.push(scenarioA, scenarioB);
+                
+                const results = this.calculator.compareScenarios(scenarios);
+                
+                // Update comparison chart
+                this.updateComparisonChart(results);
+            }
+            
+            updateComparisonChart(results) {
+                const labels = results.map(r => r.name);
+                const interestData = results.map(r => r.totalInterest);
+                const paymentData = results.map(r => r.periodicPayment);
+                
+                this.charts.comparison.data.labels = labels;
+                this.charts.comparison.data.datasets[0].data = interestData;
+                this.charts.comparison.data.datasets[1].data = paymentData;
+                this.charts.comparison.update();
+            }
+            
+            addScenario() {
+                // Implementation for adding more scenarios
+                alert('Scenario addition feature would be implemented here.');
+            }
+            
+            // ============================================
+            // CASH FLOW ANALYSIS FUNCTIONS
+            // ============================================
+            
+            addCashFlowEntry() {
+                const container = this.elements.cashFlowEntries;
+                const entryId = Date.now();
+                
+                const entryDiv = document.createElement('div');
+                entryDiv.className = 'payment-item';
+                entryDiv.dataset.id = entryId;
+                
+                entryDiv.innerHTML = `
+                    <span>Period ${this.cashFlows.length + 1}</span>
+                    <input type="number" class="cashflow-amount" placeholder="Amount" value="${this.cashFlows.length === 0 ? -10000 : 2000}">
+                    <button class="remove-payment" data-id="${entryId}">
+                        <i class="fas fa-times"></i>
+                    </button>
+                `;
+                
+                container.appendChild(entryDiv);
+                
+                // Add to cash flows array
+                this.cashFlows.push(this.cashFlows.length === 0 ? -10000 : 2000);
+                
+                // Add event listeners
+                entryDiv.querySelector('.cashflow-amount').addEventListener('input', (e) => {
+                    const index = Array.from(container.children).indexOf(entryDiv);
+                    if (index >= 0) {
+                        this.cashFlows[index] = parseFloat(e.target.value) || 0;
+                        this.updateCashFlowChart();
+                    }
+                });
+                
+                entryDiv.querySelector('.remove-payment').addEventListener('click', (e) => {
+                    const id = e.target.closest('.remove-payment').dataset.id;
+                    this.removeCashFlowEntry(id);
+                });
+                
+                this.updateCashFlowChart();
+            }
+            
+            removeCashFlowEntry(id) {
+                const element = document.querySelector(`.payment-item[data-id="${id}"]`);
+                if (element) {
+                    const container = this.elements.cashFlowEntries;
+                    const index = Array.from(container.children).indexOf(element);
+                    
+                    if (index >= 0) {
+                        this.cashFlows.splice(index, 1);
+                        element.remove();
+                        this.updateCashFlowChart();
+                    }
+                }
+            }
+            
+            calculateCashFlowNPV() {
+                const discountRate = parseFloat(this.elements.discountRate.value) / 100;
+                const npv = this.calculator.calculateNPV(this.cashFlows, discountRate);
+                
+                this.elements.npvResult.textContent = `$${npv.toLocaleString()}`;
+            }
+            
+            calculateCashFlowIRR() {
+                if (this.cashFlows.length < 2 || this.cashFlows[0] >= 0) {
+                    alert('Need at least one negative (investment) cash flow followed by positive returns.');
+                    return;
+                }
+                
+                const irr = this.calculator.calculateIRR(this.cashFlows) * 100;
+                this.elements.irrResult.textContent = `${this.calculator.roundPercentage(irr)}%`;
+                
+                // Calculate payback period
+                let cumulative = 0;
+                let paybackPeriod = 0;
+                let remaining = -this.cashFlows[0];
+                
+                for (let i = 1; i < this.cashFlows.length; i++) {
+                    cumulative += this.cashFlows[i];
+                    if (cumulative >= remaining) {
+                        paybackPeriod = i;
+                        break;
+                    }
+                }
+                
+                this.elements.paybackPeriod.textContent = `${paybackPeriod} years`;
+            }
+            
+            updateCashFlowChart() {
+                const labels = this.cashFlows.map((_, i) => `Period ${i}`);
+                const data = this.cashFlows;
+                const colors = data.map(amount => amount >= 0 ? '#4CAF50' : '#f44336');
+                
+                this.charts.cashFlow.data.labels = labels;
+                this.charts.cashFlow.data.datasets[0].data = data;
+                this.charts.cashFlow.data.datasets[0].backgroundColor = colors;
+                this.charts.cashFlow.update();
+            }
+            
+            // ============================================
+            // UTILITY FUNCTIONS
+            // ============================================
+            
+            handleSelectorOption(element) {
+                const parent = element.closest('.form-group');
+                const options = parent.querySelectorAll('.selector-option');
+                options.forEach(opt => opt.classList.remove('active'));
+                element.classList.add('active');
+            }
+            
+            updateScenario(input) {
+                const scenario = input.dataset.scenario;
+                const field = input.dataset.field;
+                // Scenario update logic
+            }
+            
+            loadSampleData() {
+                // Load some sample irregular payments
+                this.irregularPayments = [
+                    { id: 1, date: '2024-06-15', amount: 5000, type: 'extra' },
+                    { id: 2, date: '2024-12-15', amount: 3000, type: 'extra' }
+                ];
+                
+                // Load sample cash flows
+                this.cashFlows = [-10000, 2000, 2500, 3000, 3500, 4000];
+                
+                // Initialize UI
+                this.updateCashFlowChart();
+            }
+        }
+
+        // ============================================
+        // INITIALIZE APPLICATION
+        // ============================================
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            const app = new FinancialApplication();
+            window.financialApp = app; // Expose for debugging
+            
+            // Calculate initial loan
+            app.calculateLoan();
+        });
+    </script>
+</body>
+</html>

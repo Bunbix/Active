@@ -1,0 +1,49 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "DiscountSystem",
+            "request": "launch",
+            "mainClass": "DiscountSystem",
+            "projectName": "Dream_e4d052d"
+        },
+        {
+            "type": "java",
+            "name": "TimeConverter",
+            "request": "launch",
+            "mainClass": "TimeConverter",
+            "projectName": "Dream_e4d052d"
+        },
+        {
+            "type": "java",
+            "name": "BonusCalculator",
+            "request": "launch",
+            "mainClass": "BonusCalculator",
+            "projectName": "Dream_e4d052d"
+        },
+        {
+            "type": "java",
+            "name": "AssignmentDemo",
+            "request": "launch",
+            "mainClass": "AssignmentDemo",
+            "projectName": "Dream_e4d052d"
+        },
+        {
+            "type": "java",
+            "name": "VariableDemo",
+            "request": "launch",
+            "mainClass": "VariableDemo",
+            "projectName": "Dream_e4d052d"
+        },
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        }
+    ]
+}

@@ -1,0 +1,5 @@
+[Running] cd "c:\Users\afols\OneDrive\Password Recovery\Desktop\WEB-DEV-PROJECTS\Java - Assignment 2\" && javac CarDriver.java && java CarDriver
+price = $16,000.66, color = silver
+price = $5,000.00, mileage = 100,000
+
+[Done] exited with code=0 in 2.454 seconds

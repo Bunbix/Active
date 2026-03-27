@@ -1,0 +1,39 @@
+[Running] cd "c:\Users\afols\Downloads\Project-folder\" && javac ProductDemo.java && java ProductDemo
+=== Part 1: Creating Classes and Objects ===
+
+Product 1 Information:
+Name: Laptop
+Price: $999.99
+Product Code: 12345
+
+=== Part 2: Reference Assignment and Equality Testing ===
+
+Product 2 Information:
+Name: Laptop
+Price: $999.99
+Product Code: 12345
+
+Product 1 and Product 2 are equal: true
+
+=== Part 3: Overloaded Methods and Constructors ===
+
+Product 3 Information:
+Name: Tablet
+Price: $299.99
+
+Product 3 Information with Product Code:
+Tablet, $299.99, Product Code: 54321
+
+=== Part 4: Static Variables and Methods, Named Constants ===
+
+Product 4 Information:
+Smartphone, $799.99, Product Code: 67890
+
+Total Product Count: 4
+Tax Amount for Product 1: $99.999
+
+=== Summary ===
+All tasks completed successfully!
+
+[Done] exited with code=0 in 1.395 seconds
+

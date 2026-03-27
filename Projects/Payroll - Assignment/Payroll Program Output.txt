@@ -1,0 +1,45 @@
+PS C:\Users\afols\OneDrive\Password Recovery\Desktop\WEB-DEV-PROJECTS\Payroll - Assignment> javac *.java
+PS C:\Users\afols\OneDrive\Password Recovery\Desktop\WEB-DEV-PROJECTS\Payroll - Assignment> java PayrollDriver
+Number of employees: 3
+
+PROFILE FOR EMPLOYEE #1:
+type Hourly(1), Salaried(2), Salaried plus Commission(3)
+Enter 1, 2, or 3 ==> 1
+Name ==> Biff Sanchez
+Social security number ==> 111-11-1111
+Birthday month (1-12) ==> 2
+Birthday bonus week (1-4) ==> 3
+Hourly pay ==> 20
+Hours worked this past week ==> 30
+
+PROFILE FOR EMPLOYEE #2:
+type Hourly(1), Salaried(2), Salaried plus Commission(3)
+Enter 1, 2, or 3 ==> 2
+Name ==> Dirk Jones
+Social security number ==> 222-22-2222
+Birthday month (1-12) ==> 10
+Birthday bonus week (1-4) ==> 2
+Salary ==> 700
+
+PROFILE FOR EMPLOYEE #3:
+type Hourly(1), Salaried(2), Salaried plus Commission(3)
+Enter 1, 2, or 3 ==> 3
+Name ==> Suzie Que
+Social security number ==> 333-33-3333
+Birthday month (1-12) ==> 7
+Birthday bonus week (1-4) ==> 3
+Salary ==> 400
+Sales for this past week ==> 2000
+Sales commission rate (fraction paid to employee) ==> .25
+
+PAYCHECK REPORT:
+employee: Biff Sanchez
+social security number: 111-11-1111
+paycheck: $600.00
+employee: Dirk Jones
+social security number: 222-22-2222
+paycheck: $700.00
+employee: Suzie Que
+social security number: 333-33-3333
+paycheck: $900.00
+PS C:\Users\afols\OneDrive\Password Recovery\Desktop\WEB-DEV-PROJECTS\Payroll - Assignment>

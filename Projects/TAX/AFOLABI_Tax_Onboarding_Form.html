@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AFOLABI ACCOUNTING & CO. - Tax Client Onboarding 2025</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #1a3a8f 0%, #2a5bd7 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .business-info {
+            background-color: #e8f0fe;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 2px solid #1a3a8f;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+        
+        .business-info h2 {
+            color: #1a3a8f;
+            margin-bottom: 10px;
+        }
+        
+        .form-title {
+            text-align: center;
+            padding: 25px;
+            background-color: white;
+        }
+        
+        .form-title h1 {
+            color: #1a3a8f;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        
+        .form-title p {
+            color: #666;
+            font-size: 16px;
+        }
+        
+        .email-instructions {
+            background-color: #e8f4ff;
+            padding: 15px;
+            margin: 10px 30px;
+            border-left: 4px solid #1a3a8f;
+            font-size: 14px;
+            border-radius: 4px;
+        }
+        
+        .disclaimer {
+            background-color: #fff8e1;
+            padding: 15px;
+            margin: 10px 30px;
+            border-left: 4px solid #ffc107;
+            font-size: 14px;
+            border-radius: 4px;
+        }
+        
+        .form-section {
+            padding: 25px 30px;
+            border-bottom: 1px solid #eaeaea;
+        }
+        
+        .form-section:last-child {
+            border-bottom: none;
+        }
+        
+        .section-title {
+            color: #1a3a8f;
+            font-size: 20px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eaeaea;
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-title::before {
+            content: "";
+            display: inline-block;
+            width: 8px;
+            height: 20px;
+            background-color: #1a3a8f;
+            margin-right: 10px;
+            border-radius: 2px;
+        }
+        
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            gap: 20px;
+        }
+        
+        .form-group {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .form-group.full-width {
+            flex: 1 0 100%;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #444;
+        }
+        
+        input[type="text"],
+        input[type="date"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="number"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: border 0.3s;
+        }
+        
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #1a3a8f;
+            box-shadow: 0 0 0 2px rgba(26, 58, 143, 0.2);
+        }
+        
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 10px;
+        }
+        
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            margin-right: 20px;
+        }
+        
+        .checkbox-item input {
+            margin-right: 8px;
+            width: 18px;
+            height: 18px;
+        }
+        
+        .radio-group {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .radio-item {
+            display: flex;
+            align-items: center;
+        }
+        
+        .radio-item input {
+            margin-right: 8px;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            margin-top: 20px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        
+        th {
+            background-color: #f0f4ff;
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 2px solid #ddd;
+            color: #1a3a8f;
+        }
+        
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        td input,
+        td select {
+            width: 100%;
+            padding: 8px 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .button {
+            background-color: #1a3a8f;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: background-color 0.3s;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .button:hover {
+            background-color: #0d2a6e;
+        }
+        
+        .button-secondary {
+            background-color: #6c757d;
+        }
+        
+        .button-secondary:hover {
+            background-color: #545b62;
+        }
+        
+        .button-success {
+            background-color: #28a745;
+        }
+        
+        .button-success:hover {
+            background-color: #218838;
+        }
+        
+        .button-small {
+            padding: 6px 12px;
+            font-size: 14px;
+        }
+        
+        .signature-box {
+            border: 2px dashed #ccc;
+            border-radius: 6px;
+            height: 100px;
+            margin-top: 10px;
+            background-color: #f9f9f9;
+        }
+        
+        .footer {
+            background-color: #f8f9fa;
+            padding: 30px;
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .footer p {
+            margin-bottom: 10px;
+        }
+        
+        .required::after {
+            content: " *";
+            color: #e74c3c;
+        }
+        
+        .success-message {
+            background-color: #d4edda;
+            color: #155724;
+            padding: 20px;
+            border-radius: 6px;
+            margin: 20px 0;
+            text-align: center;
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            .form-row {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .form-section {
+                padding: 20px 15px;
+            }
+            
+            .header {
+                padding: 20px;
+            }
+            
+            .business-info {
+                padding: 15px;
+            }
+            
+            .email-instructions,
+            .disclaimer {
+                margin: 10px 15px;
+            }
+        }
+        
+        .income-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .income-category {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            border-left: 4px solid #1a3a8f;
+        }
+        
+        .income-category h4 {
+            margin-bottom: 10px;
+            color: #1a3a8f;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #1a3a8f;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>AFOLABI ACCOUNTING & CO.</h1>
+            <p>Professional Tax Services & Financial Solutions</p>
+        </div>
+        
+        <div class="business-info">
+            <h2>CONTACT INFORMATION</h2>
+            <p>115 Main Street North, PO Box 190, Gilbert Plains MB R0L 0X0 Canada</p>
+            <p>T. 204.647.0028 | T. 431.892.0117 | F. 204.272.3310</p>
+            <p>EMAIL: oafolabi2019@outlook.com | www.afoservices.com</p>
+        </div>
+        
+        <div class="email-instructions">
+            <strong>EMAIL SUBMISSION:</strong> This form will send all data directly to <strong>oafolabi2019@outlook.com</strong> when you click "Submit Form". Please ensure all required fields are completed.
+        </div>
+        
+        <div class="form-title">
+            <h1>2025 Tax Year Client Onboarding Form</h1>
+            <p>Please complete all sections accurately. Fields marked with * are required.</p>
+        </div>
+        
+        <div class="disclaimer">
+            <strong>Confidentiality Notice:</strong> All information provided will be kept strictly confidential and used solely for tax preparation purposes in accordance with Canadian privacy laws.
+        </div>
+        
+        <div class="success-message" id="successMessage">
+            <h3>Form Submitted Successfully!</h3>
+            <p>Thank you for completing the tax onboarding form. Your information has been sent to AFOLABI ACCOUNTING & CO.</p>
+            <p>You will receive a confirmation email shortly. If you don't see it, please check your spam folder.</p>
+        </div>
+        
+        <div class="loading" id="loadingIndicator">
+            <div class="spinner"></div>
+            <p>Sending your form to AFOLABI ACCOUNTING & CO....</p>
+        </div>
+        
+        <!-- FORMSPREE FORM - REPLACE THE ACTION URL WITH YOUR OWN AFTER SETUP -->
+        <form id="taxOnboardingForm" action="https://formspree.io/f/mojlzozn" method="POST">
+        <!-- Hidden fields to customize the email -->
+        <input type="hidden" name="_subject" value="New Tax Client Onboarding - AFOLABI ACCOUNTING">
+        <input type="hidden" name="_replyto" id="replyToEmail" value="">
+        <!-- Removed CC: <input type="hidden" name="_cc" value="oafolabi2019@outlook.com"> -->
+    
+        <!-- Section 1: Personal Information -->
+        <div class="form-section">
+            
+            <!-- Section 1: Personal Information -->
+            <div class="form-section">
+                <h2 class="section-title">1. Personal Information</h2>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="lastName" class="required">Last Name</label>
+                        <input type="text" id="lastName" name="lastName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="firstName" class="required">First Name</label>
+                        <input type="text" id="firstName" name="firstName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="middleName">Middle Name</label>
+                        <input type="text" id="middleName" name="middleName">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="dob" class="required">Date of Birth (YYYY-MM-DD)</label>
+                        <input type="date" id="dob" name="dob" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="sin" class="required">SIN</label>
+                        <input type="text" id="sin" name="sin" required pattern="[0-9]{3}-[0-9]{3}-[0-9]{3}" placeholder="123-456-789">
+                    </div>
+                    <div class="form-group">
+                        <label for="maritalStatus" class="required">Marital Status (as of Dec 31, 2025)</label>
+                        <select id="maritalStatus" name="maritalStatus" required>
+                            <option value="">Select Status</option>
+                            <option value="single">Single</option>
+                            <option value="married">Married/Common-law</option>
+                            <option value="divorced">Divorced/Separated</option>
+                            <option value="widowed">Widowed</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Section 2: Contact Information -->
+            <div class="form-section">
+                <h2 class="section-title">2. Contact Information</h2>
+                <div class="form-row">
+                    <div class="form-group full-width">
+                        <label for="homeAddress" class="required">Home Address</label>
+                        <input type="text" id="homeAddress" name="homeAddress" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="city" class="required">City</label>
+                        <input type="text" id="city" name="city" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="province" class="required">Province/Territory</label>
+                        <input type="text" id="province" name="province" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="postalCode" class="required">Postal Code</label>
+                        <input type="text" id="postalCode" name="postalCode" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group full-width">
+                        <label for="mailingAddress">Mailing Address (if different from home)</label>
+                        <input type="text" id="mailingAddress" name="mailingAddress">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="email" class="required">Primary Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="primaryPhone" class="required">Primary Phone</label>
+                        <input type="tel" id="primaryPhone" name="primaryPhone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="alternatePhone">Alternate Phone</label>
+                        <input type="tel" id="alternatePhone" name="alternatePhone">
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Section 3: Spouse Information -->
+            <div class="form-section">
+                <h2 class="section-title">3. Spouse/Common-Law Partner Information</h2>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="spouseLastName">Last Name</label>
+                        <input type="text" id="spouseLastName" name="spouseLastName">
+                    </div>
+                    <div class="form-group">
+                        <label for="spouseFirstName">First Name</label>
+                        <input type="text" id="spouseFirstName" name="spouseFirstName">
+                    </div>
+                    <div class="form-group">
+                        <label for="spouseMiddleName">Middle Name</label>
+                        <input type="text" id="spouseMiddleName" name="spouseMiddleName">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="spouseDob">Date of Birth (YYYY-MM-DD)</label>
+                        <input type="date" id="spouseDob" name="spouseDob">
+                    </div>
+                    <div class="form-group">
+                        <label for="spouseSIN">SIN</label>
+                        <input type="text" id="spouseSIN" name="spouseSIN" placeholder="123-456-789">
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Section 4: Dependent Information -->
+            <div class="form-section">
+                <h2 class="section-title">4. Dependent Information</h2>
+                <div class="table-container">
+                    <table id="dependentsTable">
+                        <thead>
+                            <tr>
+                                <th>Last Name</th>
+                                <th>First Name</th>
+                                <th>Date of Birth</th>
+                                <th>SIN</th>
+                                <th>Relationship</th>
+                                <th>Lives with Client?</th>
+                                <th>Disability?</th>
+                            </tr>
+                        </thead>
+                        <tbody id="dependentsBody">
+                            <tr>
+                                <td><input type="text" name="dependent1_lastName"></td>
+                                <td><input type="text" name="dependent1_firstName"></td>
+                                <td><input type="date" name="dependent1_dob"></td>
+                                <td><input type="text" name="dependent1_sin" placeholder="123-456-789"></td>
+                                <td>
+                                    <select name="dependent1_relationship">
+                                        <option value="">Select</option>
+                                        <option value="child">Child</option>
+                                        <option value="parent">Parent</option>
+                                        <option value="sibling">Sibling</option>
+                                        <option value="other">Other Relative</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select name="dependent1_liveswith">
+                                        <option value="yes">Yes</option>
+                                        <option value="no">No</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select name="dependent1_disability">
+                                        <option value="no">No</option>
+                                        <option value="yes">Yes</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <button type="button" class="button" onclick="addDependent()">Add Another Dependent</button>
+            </div>
+            
+            <!-- Section 5: Residency Information -->
+            <div class="form-section">
+                <h2 class="section-title">5. Residency Information</h2>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="provinceResidency" class="required">Province/Territory of residence on Dec 31, 2025</label>
+                        <input type="text" id="provinceResidency" name="provinceResidency" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Did province/territory change in 2025?</label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="provinceChangeYes" name="provinceChange" value="yes">
+                                <label for="provinceChangeYes">Yes</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="provinceChangeNo" name="provinceChange" value="no">
+                                <label for="provinceChangeNo">No</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="residencyStatus" class="required">Residency status</label>
+                        <select id="residencyStatus" name="residencyStatus" required>
+                            <option value="">Select Status</option>
+                            <option value="resident">Resident</option>
+                            <option value="non-resident">Non-Resident</option>
+                            <option value="deemed-resident">Deemed Resident</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Section 6: Income Sources -->
+            <div class="form-section">
+                <h2 class="section-title">6. Income Sources (2025)</h2>
+                <div class="income-grid">
+                    <div class="income-category">
+                        <h4>Employment Income</h4>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="incomeT4" name="income_T4" value="yes">
+                                <label for="incomeT4">T4 Employment</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="incomeSelfEmployed" name="income_self_employed" value="yes">
+                                <label for="incomeSelfEmployed">Self-Employment</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="income-category">
+                        <h4>Investment Income</h4>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="incomeT3T5" name="income_T3T5" value="yes">
+                                <label for="incomeT3T5">T3/T5 (Interest/Dividends)</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="incomeCapital" name="income_capital" value="yes">
+                                <label for="incomeCapital">Capital Gains/Losses</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="income-category">
+                        <h4>Government Benefits</h4>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="incomeCPP" name="income_CPP" value="yes">
+                                <label for="incomeCPP">CPP/QPP</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="incomeOAS" name="income_OAS" value="yes">
+                                <label for="incomeOAS">OAS</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="estimatedIncome">Estimated Total Income 2025 ($)</label>
+                        <input type="number" id="estimatedIncome" name="estimatedIncome" min="0" step="0.01">
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Section 7: Direct Deposit Information -->
+            <div class="form-section">
+                <h2 class="section-title">7. Direct Deposit Information</h2>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="bankName">Bank Name</label>
+                        <input type="text" id="bankName" name="bankName">
+                    </div>
+                    <div class="form-group">
+                        <label for="accountNumber">Account Number</label>
+                        <input type="text" id="accountNumber" name="accountNumber">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Account Type</label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="accountChequing" name="accountType" value="chequing">
+                                <label for="accountChequing">Chequing</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="accountSavings" name="accountType" value="savings">
+                                <label for="accountSavings">Savings</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="accountName">Name on Account</label>
+                        <input type="text" id="accountName" name="accountName">
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Section 8: Additional Questions -->
+            <div class="form-section">
+                <h2 class="section-title">8. Additional Information</h2>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Are you claiming the disability amount?</label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="disabilityYes" name="disabilityClaim" value="yes">
+                                <label for="disabilityYes">Yes</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="disabilityNo" name="disabilityClaim" value="no">
+                                <label for="disabilityNo">No</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Did you sell a home in 2025?</label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="homeSaleYes" name="homeSale" value="yes">
+                                <label for="homeSaleYes">Yes</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="homeSaleNo" name="homeSale" value="no">
+                                <label for="homeSaleNo">No</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Owned foreign property > $100,000 CAD?</label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="foreignPropertyYes" name="foreignProperty" value="yes">
+                                <label for="foreignPropertyYes">Yes</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="foreignPropertyNo" name="foreignProperty" value="no">
+                                <label for="foreignPropertyNo">No</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>First time filing in 2025?</label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="firstFilingYes" name="firstFiling" value="yes">
+                                <label for="firstFilingYes">Yes</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="firstFilingNo" name="firstFiling" value="no">
+                                <label for="firstFilingNo">No</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group full-width">
+                        <label for="additionalNotes">Additional Notes or Comments</label>
+                        <textarea id="additionalNotes" name="additionalNotes" rows="4" placeholder="Any additional information we should know..."></textarea>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Section 9: Declaration & Signature -->
+            <div class="form-section">
+                <h2 class="section-title">9. Declaration & Signature</h2>
+                <div class="form-row">
+                    <div class="form-group full-width">
+                        <p>I certify that the information provided in this form is accurate and complete to the best of my knowledge. I authorize AFOLABI ACCOUNTING & CO. to prepare and file my tax return(s) based on this information.</p>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="clientSignature" class="required">Client Signature (Type your full name)</label>
+                        <input type="text" id="clientSignature" name="clientSignature" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signatureDate" class="required">Date</label>
+                        <input type="date" id="signatureDate" name="signatureDate" required>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Form Buttons -->
+            <div class="form-section" style="text-align: center; background-color: #f8f9fa;">
+                <button type="submit" class="button button-success" style="padding: 15px 30px; font-size: 18px;">
+                    <span id="submitText">Submit Form to AFOLABI ACCOUNTING</span>
+                </button>
+                <button type="button" class="button button-secondary" onclick="clearForm()" style="padding: 15px 30px; font-size: 18px;">Clear Form</button>
+                <button type="button" class="button" onclick="generateEmail()" style="padding: 15px 30px; font-size: 18px;">Email Form as Backup</button>
+            </div>
+        </form>
+        
+        <div class="footer">
+            <p><strong>AFOLABI ACCOUNTING & CO.</strong> | Professional Tax Services & Financial Solutions</p>
+            <p>115 Main Street North, PO Box 190, Gilbert Plains MB R0L 0X0 Canada</p>
+            <p>T. 204.647.0028 | T. 431.892.0117 | F. 204.272.3310 | EMAIL: oafolabi2019@outlook.com | www.afoservices.com</p>
+            <p style="margin-top: 20px; font-size: 12px;">Form Version: 2025-02 | Last Updated: February 2026</p>
+        </div>
+    </div>
+
+    <script>
+        // Add dependent row
+        let dependentCount = 1;
+        
+        function addDependent() {
+            dependentCount++;
+            const tbody = document.getElementById('dependentsBody');
+            const newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <td><input type="text" name="dependent${dependentCount}_lastName"></td>
+                <td><input type="text" name="dependent${dependentCount}_firstName"></td>
+                <td><input type="date" name="dependent${dependentCount}_dob"></td>
+                <td><input type="text" name="dependent${dependentCount}_sin" placeholder="123-456-789"></td>
+                <td>
+                    <select name="dependent${dependentCount}_relationship">
+                        <option value="">Select</option>
+                        <option value="child">Child</option>
+                        <option value="parent">Parent</option>
+                        <option value="sibling">Sibling</option>
+                        <option value="other">Other Relative</option>
+                    </select>
+                </td>
+                <td>
+                    <select name="dependent${dependentCount}_liveswith">
+                        <option value="yes">Yes</option>
+                        <option value="no">No</option>
+                    </select>
+                </td>
+                <td>
+                    <select name="dependent${dependentCount}_disability">
+                        <option value="no">No</option>
+                        <option value="yes">Yes</option>
+                    </select>
+                </td>
+            `;
+            tbody.appendChild(newRow);
+        }
+        
+        // Clear form
+        function clearForm() {
+            if (confirm('Are you sure you want to clear all form data?')) {
+                document.getElementById('taxOnboardingForm').reset();
+                // Reset dependents table to one row
+                const tbody = document.getElementById('dependentsBody');
+                tbody.innerHTML = `
+                    <tr>
+                        <td><input type="text" name="dependent1_lastName"></td>
+                        <td><input type="text" name="dependent1_firstName"></td>
+                        <td><input type="date" name="dependent1_dob"></td>
+                        <td><input type="text" name="dependent1_sin" placeholder="123-456-789"></td>
+                        <td>
+                            <select name="dependent1_relationship">
+                                <option value="">Select</option>
+                                <option value="child">Child</option>
+                                <option value="parent">Parent</option>
+                                <option value="sibling">Sibling</option>
+                                <option value="other">Other Relative</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select name="dependent1_liveswith">
+                                <option value="yes">Yes</option>
+                                <option value="no">No</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select name="dependent1_disability">
+                                <option value="no">No</option>
+                                <option value="yes">Yes</option>
+                            </select>
+                        </td>
+                    </tr>
+                `;
+                dependentCount = 1;
+            }
+        }
+        
+        // Set today's date as default for signature date
+        document.getElementById('signatureDate').valueAsDate = new Date();
+        
+        // Format SIN input
+        document.getElementById('sin').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length > 3) {
+                value = value.substring(0, 3) + '-' + value.substring(3);
+            }
+            if (value.length > 7) {
+                value = value.substring(0, 7) + '-' + value.substring(7, 10);
+            }
+            e.target.value = value;
+        });
+        
+        // Auto-combine names for signature field
+        function updateSignatureField() {
+            const lastName = document.getElementById('lastName').value || '';
+            const firstName = document.getElementById('firstName').value || '';
+            const middleName = document.getElementById('middleName').value || '';
+            
+            let fullName = '';
+            if (firstName && lastName) {
+                fullName = `${firstName} ${middleName ? middleName + ' ' : ''}${lastName}`.trim();
+            }
+            
+            // Auto-fill signature if empty
+            const signatureField = document.getElementById('clientSignature');
+            if (!signatureField.value && fullName) {
+                signatureField.value = fullName;
+            }
+        }
+        
+        // Add event listeners to name fields
+        document.getElementById('lastName').addEventListener('input', updateSignatureField);
+        document.getElementById('firstName').addEventListener('input', updateSignatureField);
+        document.getElementById('middleName').addEventListener('input', updateSignatureField);
+        
+        // Form submission with Formspree
+        document.getElementById('taxOnboardingForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Set the reply-to email
+            const clientEmail = document.getElementById('email').value;
+            document.getElementById('replyToEmail').value = clientEmail;
+            
+            // Show loading indicator
+            document.getElementById('loadingIndicator').style.display = 'block';
+            document.getElementById('submitText').textContent = 'Sending...';
+            
+            // Basic validation
+            const requiredFields = document.querySelectorAll('[required]');
+            let isValid = true;
+            
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    isValid = false;
+                    field.style.borderColor = '#e74c3c';
+                } else {
+                    field.style.borderColor = '#ddd';
+                }
+            });
+            
+            if (!isValid) {
+                document.getElementById('loadingIndicator').style.display = 'none';
+                document.getElementById('submitText').textContent = 'Submit Form to AFOLABI ACCOUNTING';
+                alert('Please fill in all required fields marked with *.');
+                return;
+            }
+            
+            try {
+                // Submit to Formspree
+                const formData = new FormData(this);
+                const response = await fetch(this.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+                
+                if (response.ok) {
+                    // Success - show success message
+                    document.getElementById('loadingIndicator').style.display = 'none';
+                    document.getElementById('successMessage').style.display = 'block';
+                    document.getElementById('taxOnboardingForm').style.display = 'none';
+                    document.getElementById('submitText').textContent = 'Submit Form to AFOLABI ACCOUNTING';
+                    
+                    // Scroll to top to show success message
+                    window.scrollTo(0, 0);
+                } else {
+                    // Formspree error - try fallback method
+                    document.getElementById('loadingIndicator').style.display = 'none';
+                    document.getElementById('submitText').textContent = 'Submit Form to AFOLABI ACCOUNTING';
+                    alert('Form submission failed. Please use the "Email Form as Backup" button instead.');
+                }
+            } catch (error) {
+                // Network error
+                document.getElementById('loadingIndicator').style.display = 'none';
+                document.getElementById('submitText').textContent = 'Submit Form to AFOLABI ACCOUNTING';
+                alert('Network error. Please use the "Email Form as Backup" button.');
+            }
+        });
+        
+        // Backup email function using mailto:
+        function generateEmail() {
+            // Collect all form data
+            const formData = new FormData(document.getElementById('taxOnboardingForm'));
+            let emailBody = "NEW TAX CLIENT ONBOARDING FORM SUBMISSION\n";
+            emailBody += "===========================================\n\n";
+            
+            // Add client information
+            emailBody += "CLIENT INFORMATION:\n";
+            emailBody += `Last Name: ${document.getElementById('lastName').value}\n`;
+            emailBody += `First Name: ${document.getElementById('firstName').value}\n`;
+            emailBody += `Middle Name: ${document.getElementById('middleName').value || 'N/A'}\n`;
+            emailBody += `Date of Birth: ${document.getElementById('dob').value}\n`;
+            emailBody += `SIN: ${document.getElementById('sin').value}\n`;
+            emailBody += `Marital Status: ${document.getElementById('maritalStatus').value}\n\n`;
+            
+            emailBody += "CONTACT INFORMATION:\n";
+            emailBody += `Home Address: ${document.getElementById('homeAddress').value}\n`;
+            emailBody += `City: ${document.getElementById('city').value}\n`;
+            emailBody += `Province: ${document.getElementById('province').value}\n`;
+            emailBody += `Postal Code: ${document.getElementById('postalCode').value}\n`;
+            emailBody += `Email: ${document.getElementById('email').value}\n`;
+            emailBody += `Phone: ${document.getElementById('primaryPhone').value}\n\n`;
+            
+            // Add spouse info if available
+            if (document.getElementById('spouseLastName').value || document.getElementById('spouseFirstName').value) {
+                emailBody += "SPOUSE INFORMATION:\n";
+                emailBody += `Last Name: ${document.getElementById('spouseLastName').value || ''}\n`;
+                emailBody += `First Name: ${document.getElementById('spouseFirstName').value || ''}\n`;
+                emailBody += `Middle Name: ${document.getElementById('spouseMiddleName').value || 'N/A'}\n`;
+                emailBody += `Date of Birth: ${document.getElementById('spouseDob').value || ''}\n`;
+                emailBody += `SIN: ${document.getElementById('spouseSIN').value || ''}\n\n`;
+            }
+            
+            // Add additional info
+            emailBody += "ADDITIONAL INFORMATION:\n";
+            emailBody += `Residency Status: ${document.getElementById('residencyStatus').value}\n`;
+            emailBody += `Estimated Income: $${document.getElementById('estimatedIncome').value || 'Not provided'}\n`;
+            emailBody += `Disability Claim: ${document.querySelector('input[name="disabilityClaim"]:checked')?.value || 'Not specified'}\n`;
+            emailBody += `First Time Filing: ${document.querySelector('input[name="firstFiling"]:checked')?.value || 'Not specified'}\n\n`;
+            
+            emailBody += `Client Signature: ${document.getElementById('clientSignature').value}\n`;
+            emailBody += `Signature Date: ${document.getElementById('signatureDate').value}\n\n`;
+            
+            emailBody += "--- END OF FORM ---\n";
+            emailBody += "Submitted via AFOLABI ACCOUNTING Onboarding Form";
+            
+            // Create mailto link
+            const subject = `New Tax Client Onboarding - ${document.getElementById('lastName').value}, ${document.getElementById('firstName').value}`;
+            const mailtoLink = `mailto:oafolabi2019@outlook.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
+            
+            // Open email client
+            window.location.href = mailtoLink;
+        }
+        
+        // Auto-save form data to localStorage (optional feature)
+        function saveFormProgress() {
+            const formElements = document.getElementById('taxOnboardingForm').elements;
+            const formData = {};
+            
+            for (let i = 0; i < formElements.length; i++) {
+                const element = formElements[i];
+                if (element.name) {
+                    if (element.type === 'checkbox' || element.type === 'radio') {
+                        if (element.checked) {
+                            formData[element.name] = element.value;
+                        }
+                    } else {
+                        formData[element.name] = element.value;
+                    }
+                }
+            }
+            
+            localStorage.setItem('taxFormData', JSON.stringify(formData));
+        }
+        
+        // Load saved form data
+        function loadFormProgress() {
+            const savedData = localStorage.getItem('taxFormData');
+            if (savedData) {
+                const formData = JSON.parse(savedData);
+                const formElements = document.getElementById('taxOnboardingForm').elements;
+                
+                for (let i = 0; i < formElements.length; i++) {
+                    const element = formElements[i];
+                    if (element.name && formData[element.name] !== undefined) {
+                        if (element.type === 'checkbox' || element.type === 'radio') {
+                            if (element.value === formData[element.name]) {
+                                element.checked = true;
+                            }
+                        } else {
+                            element.value = formData[element.name];
+                        }
+                    }
+                }
+                
+                // Show restore message
+                if (confirm('We found previously saved form data. Would you like to restore it?')) {
+                    console.log('Form data restored');
+                } else {
+                    clearForm();
+                }
+            }
+        }
+        
+        // Auto-save every 10 seconds
+        setInterval(saveFormProgress, 10000);
+        
+        // Load saved data on page load
+        window.addEventListener('load', loadFormProgress);
+    </script>
+</body>
+</html>
